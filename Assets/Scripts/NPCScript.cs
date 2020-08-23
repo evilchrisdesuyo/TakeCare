@@ -8,6 +8,7 @@ public class NPCScript : MonoBehaviour
     public GameObject Player1;
     public PlayerScript playerScript1;
     public float distanceToPlayer;
+    public float distanceToPlayerConstant;
     public bool spottedPlayer = false;
     public float tooCloseDistance = 3f;
     public float tooFarDistance = 6f;
@@ -47,52 +48,59 @@ public class NPCScript : MonoBehaviour
         {
             dead = true;
         }
-        distanceToPlayer = Vector3.Distance(Player1.transform.position, transform.position);
-        
-        if(distanceToPlayer < tooFarDistance + 1)
+
+        distanceToPlayerConstant = Vector3.Distance(Player1.transform.position, transform.position);
+
+        if (playerScript1.shootTarget == this.gameObject.transform)
+        {
+            distanceToPlayer = Vector3.Distance(Player1.transform.position, transform.position);
+        }
+
+        if (distanceToPlayer < tooFarDistance + 1)
         { 
-        if (distanceToPlayer <= tooCloseDistance)
-        {
-            tooClose = true;
-            draining = false;
-            playerScript1.distanceLight.color = Color.red;//(Color.red / 1f) * Time.deltaTime;
-            playerScript1.tooCloseText.enabled = true;
-        }
-        else
-            if (distanceToPlayer > tooCloseDistance)
-        {
-            tooClose = false;
-            playerScript1.tooCloseText.enabled = false;
-        }
+            if (distanceToPlayer <= tooCloseDistance && playerScript1.shootTarget == this.gameObject.transform)
+            {
+                tooClose = true;
+                draining = false;
+                playerScript1.distanceLight.color = Color.red;//(Color.red / 1f) * Time.deltaTime;
+                playerScript1.tooCloseText.enabled = true;
+            }
+            else
+                if (distanceToPlayer > tooCloseDistance)
+            {
+                tooClose = false;
+                playerScript1.tooCloseText.enabled = false;
+            }
 
-        if (tooClose && tooCloseMeter < secsTilPassout)
-        {
-            tooCloseMeter += 1f * Time.deltaTime;
-        }
-        else
-            if (!tooClose && tooCloseMeter < 0f)
-        {
-            tooCloseMeter -= 1f * Time.deltaTime;
-        }
+            if (tooClose && tooCloseMeter < secsTilPassout)
+            {
+                tooCloseMeter += 1f * Time.deltaTime;
+            }
+            else
+                if (!tooClose && tooCloseMeter < 0f)
+                {
+                    tooCloseMeter -= 1f * Time.deltaTime;
+                }
 
-        if (distanceToPlayer >= tooFarDistance)
-        {
-            tooFar = true;
-            draining = false;
-            tooCloseMeter = 0f;
-            playerScript1.distanceLight.color -= (Color.white);// / 2.0f) * Time.deltaTime;
-        }
-        else
+            if (distanceToPlayer >= tooFarDistance)
+                {
+                    tooFar = true;
+                    draining = false;
+                    tooCloseMeter = 0f;
+                    playerScript1.distanceLight.color -= (Color.white);// / 2.0f) * Time.deltaTime;
+                }
+            else
             if (distanceToPlayer < tooFarDistance)
-        {
-            tooFar = false;
-        }
-        if (!tooClose && !tooFar)
-        {
-            playerScript1.distanceLight.color = Color.yellow;
-        }
-    }
-            if (draining)
+                {
+                    tooFar = false;
+                }
+            if (!tooClose && !tooFar && playerScript1.shootTarget == this.gameObject.transform)
+                {
+                    playerScript1.distanceLight.color = Color.yellow;
+                }
+         }
+        
+        if (draining)
         {
             CARE -= 1 * Time.deltaTime;
             //player score += scoreamount
@@ -111,7 +119,7 @@ public class NPCScript : MonoBehaviour
             Debug.Log("Player trying to drain");
 
             // if not too close and not too far and //not too far from cube
-            if (!tooClose && !tooFar && CARE > 0)
+            if (!tooClose && CARE > 0 && distanceToPlayerConstant < tooFarDistance)
             {
                 //assign that NPC to target
                 playerScript1.shootTarget = this.transform;

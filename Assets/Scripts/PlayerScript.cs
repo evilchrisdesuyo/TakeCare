@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -77,16 +78,37 @@ public class PlayerScript : MonoBehaviour
         {
             Application.Quit();
         }
+
+        findClosestNPC();
     }
     //on collision enter
     // if others tag is item
     // carry = other
     //other. RB = disabled
 
+     //if others tag is enemy
+    // health -=1
+    //send flying
 
+    void findClosestNPC()
+    {
+        float distanceToClosestNPC = Mathf.Infinity;
+        NPCScript closestNPC = null;
+        NPCScript[] allNPCs = GameObject.FindObjectsOfType<NPCScript>();
 
-    //put reitcal on screen
-    //on mouse click down
+        foreach (NPCScript currentNPC in allNPCs)
+        {
+            float distanceToNPC = (currentNPC.transform.position - this.transform.position).sqrMagnitude;
+            if (distanceToNPC < distanceToClosestNPC)
+            {
+                distanceToClosestNPC = distanceToNPC;
+                closestNPC = currentNPC;
+                shootTarget = closestNPC.transform;
+            }
+        }
+
+        Debug.DrawLine(this.transform.position, closestNPC.transform.position);
+    }
     
     
 }
