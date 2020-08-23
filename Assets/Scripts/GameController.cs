@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
     public float timer = 800f;
-    public bool timerActive;
+    public bool timerActive = true;
     public float careInShip = 0f;
     public float careCapacity = 1000;
     public enum gameState {Intro, Gameplay}
@@ -15,27 +17,46 @@ public class GameController : MonoBehaviour
     public float distanceToPlayer;
     public bool dispensing;
     public float playerCare;
+    public Collider dispensorVolume;
+    public Text timerText;
+    public Text careInShipText;
+
     // Start is called before the first frame update
     void Awake()
     {
         //player1 = findgamobjectwithtag("player")
-        player1Script = GetComponent<PlayerScript>();
+        player1Script = Player1.GetComponent<PlayerScript>();
+        if (currentGameState == gameState.Intro)
+        {
+            introLogic();
+
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        timerText.text = timer.ToString();
+        careInShipText.text = careInShip + "/" + careCapacity ; //careInShip.ToString("/" + careCapacity);
+
         distanceToPlayer = Vector3.Distance(Player1.transform.position, this.transform.position);
         playerCare = player1Script.CAREstolen;
 
         if (timerActive)
         {
             timer -= 1 * Time.deltaTime;
-            if (timer <= 0f)
+            if (timer <= 0)
             {
+                Debug.Log("TIME UP");
+
+                timer = 0;
                 timeUp();
+
             }
         }
+
+
+      
 
         if (Input.GetButton("Fire2"))
         {
@@ -63,20 +84,52 @@ public class GameController : MonoBehaviour
 
         if (dispensing)
         {
-            playerCare -= 1 * Time.deltaTime;
-            careInShip += 1 * Time.deltaTime;
+            player1Script.CAREstolen -= 5 * Time.deltaTime;
+            careInShip += 5 * Time.deltaTime;
         }
+
+         //timeUp()
+       // {
+            
+       // }
     }
 
-    void timeUp()
+    private void OnCollisionStay(Collision collision)
+    {
+        //check if player is in collision on spotlight
+    }
+
+    void introLogic()
+    {
+        //desaturate
+        //move cam
+        //move ship
+        //play video?
+        // hold until cine is done
+        //fade back to saturate
+        //move to dynamic angle
+        //move ship to groud
+        // change angles
+        //spawn player
+        //hold for a few seconds
+        // correct cam
+        //currentGameState = gameState.Gameplay;
+    }
+        void timeUp()
     {
         if (careInShip < careCapacity)
         {
+            Debug.Log("Running fail logic");
             //gameover
+            SceneManager.LoadScene("Failure-NotEnough");
         }
-        else if(careInShip < careCapacity)
+        if (careInShip >= careCapacity)
         {
+            Debug.Log("Running win logic");
             //winner is you
+            SceneManager.LoadScene("Success");
         }
     }
+
+
 }

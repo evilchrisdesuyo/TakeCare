@@ -28,8 +28,11 @@ public class PlayerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //get character controller
-        Cursor.lockState = CursorLockMode.Locked;
+       // playerCareText = ----------------------------------------------------
+      //tooCloseText = ---------------------------------------------------
+
+    //get character controller
+    Cursor.lockState = CursorLockMode.Locked;
         distanceLight.color -= (Color.white / 2.0f) * Time.deltaTime;
         tooCloseText.enabled = false;
     }
@@ -37,6 +40,11 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (CAREstolen < 0)
+        {
+            CAREstolen = 0;
+        }
+
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         if (isGrounded && velocity.y < 0)
