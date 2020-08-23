@@ -21,10 +21,10 @@ public class NPCScript : MonoBehaviour
     public bool draining = false;
     public bool drained = false;
     public float CARE = 10;
-    public List<Transform> allWalkTargets;
-    public Transform currentWalkTarget;
-    public List<Transform> fleeTargets;
-    public Transform currentFleeTarget;
+    public List<GameObject> allWalkTargets;
+    public GameObject currentWalkTarget;
+    public List<GameObject> fleeTargets;
+    public GameObject currentFleeTarget;
     public enum behaviorState {Idle, Walking, Inspecting, Fleeing, debug};
     public behaviorState currentBehavior;
     public NavMeshAgent agent;
@@ -39,13 +39,25 @@ public class NPCScript : MonoBehaviour
     public bool hostile = false;
     public enum SightSensitivity { STRICT, LOOSE};
     public SightSensitivity Sensitivtee = SightSensitivity.STRICT;
+    public bool chasingPlayer = false;
     // Start is called before the first frame update
     void Awake()
     {
         //Player1 = GetComponent.
-        //currentBehavior = behaviorState.Walking;
+        Player1 = GameObject.FindGameObjectWithTag("Player");
+        playerScript1 = Player1.GetComponent<PlayerScript>();
+        allWalkTargets = new List<GameObject>();
+        allWalkTargets.AddRange(GameObject.FindGameObjectsWithTag("WalkTarget"));
+        fleeTargets = new List<GameObject>();
+        fleeTargets.AddRange(GameObject.FindGameObjectsWithTag("FleeTarget"));
+        
         col = GetComponent<SphereCollider>();
         currentFleeTarget = fleeTargets[Random.Range(0, fleeTargets.Count)];
+
+        if (currentWalkTarget == null)
+        {
+            currentWalkTarget = allWalkTargets[Random.Range(0, allWalkTargets.Count)];
+        }
     }
 
     // Update is called once per frame
@@ -56,7 +68,8 @@ public class NPCScript : MonoBehaviour
         {
             if (hostile)
             {
-                agent.SetDestination(playerScript1.transform.position);
+                
+                chasingPlayer = true;
             }
             else
                 if (!hostile)
@@ -65,9 +78,20 @@ public class NPCScript : MonoBehaviour
             }
         }
 
+        if (distanceToPlayer >= 20 && !seesPlayer || distanceToPlayer > 50)
+        {
+            chasingPlayer = false;
+        }
+
+        if(chasingPlayer)
+        {
+            agent.SetDestination(playerScript1.transform.position);
+        }
+        
+
         if (currentBehavior == behaviorState.Fleeing)
         {
-            Vector3 target = new Vector3(currentFleeTarget.position.x, currentFleeTarget.position.y, currentFleeTarget.position.z);
+            Vector3 target = new Vector3(currentFleeTarget.transform.position.x, currentFleeTarget.transform.position.y, currentFleeTarget.transform.position.z);
             agent.speed = 19;
             agent.SetDestination(target);
         }
@@ -91,10 +115,18 @@ public class NPCScript : MonoBehaviour
 
         if (currentBehavior == behaviorState.Walking)
         {
-            Vector3 target = new Vector3(currentWalkTarget.position.x, currentWalkTarget.position.y, currentWalkTarget.position.z);
-            agent.SetDestination(target);
+            Vector3 target = new Vector3(currentWalkTarget.transform.position.x, currentWalkTarget.transform.position.y, currentWalkTarget.transform.position.z);
+            if (!hostile)
+            {
+                agent.SetDestination(target);
+            }
+                if (hostile && !chasingPlayer)
+            {
+                agent.SetDestination(target);
+            }
+            
 
-            distanceToTarget = Vector3.Distance(currentWalkTarget.position, transform.position);
+            distanceToTarget = Vector3.Distance(currentWalkTarget.transform.position, transform.position);
 
             if (distanceToTarget < 2f)
             {
