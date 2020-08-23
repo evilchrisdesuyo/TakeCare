@@ -80,6 +80,8 @@ public class PlayerScript : MonoBehaviour
         }
 
         findClosestNPC();
+
+        //shootTarget.gameobject.material.emmissive = glowing
     }
     //on collision enter
     // if others tag is item

@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class NPCScript : MonoBehaviour
 {
+    public CharacterController NPCcontroller;
     public GameObject Player1;
     public PlayerScript playerScript1;
     public float distanceToPlayer;
@@ -22,16 +23,57 @@ public class NPCScript : MonoBehaviour
     public float CARE = 10;
     public List<Transform> allWalkTargets;
     public Transform currentWalkTarget;
-   
+    public enum behaviorState {Idle, Walking, Inspecting, Fleeing};
+    public behaviorState currentBehavior;
+    public NavMeshAgent agent;
+    public float idleTimer;
+    public float distanceToTarget;
+
     // Start is called before the first frame update
     void Start()
     {
         //Player1 = GetComponent.
+        //currentBehavior = behaviorState.Walking;
+
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        //if idle timer = 0 
+        //currentBehavior = behaviorState.Walking;
+        if (NPCcontroller.velocity.z < 0.01f && currentBehavior == behaviorState.Walking)
+       {
+           // Debug.LogError("NPC STUCK AT" + transform.position);
+        }
+    //
+        if (idleTimer > 0)
+        {
+            idleTimer -= 1 * Time.deltaTime;
+        }
+
+        if (currentBehavior == behaviorState.Idle && idleTimer <= 0)
+        {
+            currentBehavior = behaviorState.Walking;
+            currentWalkTarget = allWalkTargets[Random.Range(0, allWalkTargets.Count)];
+        }
+
+
+        if (currentBehavior == behaviorState.Walking)
+        {
+            Vector3 target = new Vector3(currentWalkTarget.position.x, currentWalkTarget.position.y, currentWalkTarget.position.z);
+            agent.SetDestination(target);
+
+            distanceToTarget = Vector3.Distance(currentWalkTarget.position, transform.position);
+
+            if (distanceToTarget < 2f)
+            {
+                currentBehavior = behaviorState.Idle;
+                //MAKE THIS A RANDOM RANGE
+                idleTimer = Random.Range(10, 30);
+            }
+        }
 
         if (distanceToPlayer > 100)
         {
