@@ -76,7 +76,8 @@ public class PlayerScript : MonoBehaviour
 
         if (Input.GetButtonDown("Cancel"))
         {
-            Application.Quit();
+            //Application.Quit();
+            //pause menu
         }
 
         findClosestNPC();
