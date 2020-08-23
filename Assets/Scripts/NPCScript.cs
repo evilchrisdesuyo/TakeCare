@@ -23,31 +23,60 @@ public class NPCScript : MonoBehaviour
     public float CARE = 10;
     public List<Transform> allWalkTargets;
     public Transform currentWalkTarget;
-    public enum behaviorState {Idle, Walking, Inspecting, Fleeing};
+    public List<Transform> fleeTargets;
+    public Transform currentFleeTarget;
+    public enum behaviorState {Idle, Walking, Inspecting, Fleeing, debug};
     public behaviorState currentBehavior;
     public NavMeshAgent agent;
     public float idleTimer;
     public float distanceToTarget;
 
+    public float FOV = 45f;
+    public bool seesPlayer;
+    private SphereCollider col;
+    public Transform head;
+    public Vector3 lastPlayerLocation;
+    public bool hostile = false;
+    public enum SightSensitivity { STRICT, LOOSE};
+    public SightSensitivity Sensitivtee = SightSensitivity.STRICT;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         //Player1 = GetComponent.
         //currentBehavior = behaviorState.Walking;
-
-        
+        col = GetComponent<SphereCollider>();
+        currentFleeTarget = fleeTargets[Random.Range(0, fleeTargets.Count)];
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if idle timer = 0 
+       
+        if (seesPlayer)
+        {
+            if (hostile)
+            {
+                agent.SetDestination(playerScript1.transform.position);
+            }
+            else
+                if (!hostile)
+            {
+                currentBehavior = behaviorState.Fleeing;
+            }
+        }
+
+        if (currentBehavior == behaviorState.Fleeing)
+        {
+            Vector3 target = new Vector3(currentFleeTarget.position.x, currentFleeTarget.position.y, currentFleeTarget.position.z);
+            agent.speed = 19;
+            agent.SetDestination(target);
+        }
         //currentBehavior = behaviorState.Walking;
         if (NPCcontroller.velocity.z < 0.01f && currentBehavior == behaviorState.Walking)
-       {
-           // Debug.LogError("NPC STUCK AT" + transform.position);
+        {
+            // Debug.LogError("NPC STUCK AT" + transform.position);
         }
-    //
+        //
         if (idleTimer > 0)
         {
             idleTimer -= 1 * Time.deltaTime;
@@ -71,13 +100,13 @@ public class NPCScript : MonoBehaviour
             {
                 currentBehavior = behaviorState.Idle;
                 //MAKE THIS A RANDOM RANGE
-                idleTimer = Random.Range(10, 30);
+                idleTimer = Random.Range(10, 20);
             }
         }
 
         if (distanceToPlayer > 100)
         {
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
 
         if (CARE == 0)
@@ -88,7 +117,9 @@ public class NPCScript : MonoBehaviour
         //DO THE LIGHT LOGIC ONLY ONE NPC AT A TIME AND ONLY IF IT CAN BE DRAINED
         if (tooCloseMeter >= secsTilPassout)
         {
-            dead = true;
+            Debug.Log("BOOM");
+            Destroy(this.gameObject);
+           // dead = true;
         }
 
         distanceToPlayerConstant = Vector3.Distance(Player1.transform.position, transform.position);
@@ -99,7 +130,7 @@ public class NPCScript : MonoBehaviour
         }
 
         if (distanceToPlayer < tooFarDistance + 1)
-        { 
+        {
             if (distanceToPlayer <= tooCloseDistance && playerScript1.shootTarget == this.gameObject.transform)
             {
                 tooClose = true;
@@ -114,40 +145,40 @@ public class NPCScript : MonoBehaviour
                 playerScript1.tooCloseText.enabled = false;
             }
 
-            if (tooClose && tooCloseMeter < secsTilPassout)
+            if (!hostile && tooClose && tooCloseMeter < secsTilPassout)
             {
                 tooCloseMeter += 1f * Time.deltaTime;
             }
             else
                 if (!tooClose && tooCloseMeter < 0f)
-                {
-                    tooCloseMeter -= 1f * Time.deltaTime;
-                }
+            {
+                tooCloseMeter -= 1f * Time.deltaTime;
+            }
 
             if (distanceToPlayer >= tooFarDistance)
-                {
-                    tooFar = true;
-                    draining = false;
-                    tooCloseMeter = 0f;
-                    playerScript1.distanceLight.color -= (Color.white);// / 2.0f) * Time.deltaTime;
-                }
+            {
+                tooFar = true;
+                draining = false;
+                tooCloseMeter = 0f;
+                playerScript1.distanceLight.color -= (Color.white);// / 2.0f) * Time.deltaTime;
+            }
             else
             if (distanceToPlayer < tooFarDistance)
-                {
-                    tooFar = false;
-                }
+            {
+                tooFar = false;
+            }
             if (!tooClose && !tooFar && playerScript1.shootTarget == this.gameObject.transform)
-                {
-                    playerScript1.distanceLight.color = Color.yellow;
-                }
-         }
-        
+            {
+                playerScript1.distanceLight.color = Color.yellow;
+            }
+        }
+
         if (draining)
         {
             CARE -= 1 * Time.deltaTime;
             //player score += scoreamount
             playerScript1.CAREstolen += 1 * Time.deltaTime;
-           
+
         }
         //select runpoint at random
         // AI state = calm
@@ -171,27 +202,113 @@ public class NPCScript : MonoBehaviour
                 playerScript1.distanceLight.color = Color.green;
 
             }
-    
-        
+
+
         }
         if (Input.GetButtonUp("Fire1") || CARE <= 0 || distanceToPlayer >= tooFarDistance)
         {
             draining = false;
-            
+
         }
-            // void OnMouseDown()
-            //   {
-            //assign that NPC to target
-            //    playerScript1.shootTarget = this.transform;
-            // if not too close and not too far and //not too far from cube
-            //    if (!tooClose && !tooFar)
-            //   {
-            //       //start draining
-            //      draining = true;
-            //  }
+        // void OnMouseDown()
+        //   {
+        //assign that NPC to target
+        //    playerScript1.shootTarget = this.transform;
+        // if not too close and not too far and //not too far from cube
+        //    if (!tooClose && !tooFar)
+        //   {
+        //       //start draining
+        //      draining = true;
+        //  }
 
 
-            //set rotation of model look at target
-            // cinemachine lookat = shoottarget
+        //set rotation of model look at target
+        // cinemachine lookat = shoottarget
+    
         }
+
+    bool InFOV()
+    {
+        Vector3 DirToTarget = playerScript1.transform.position - head.position;
+
+        float Angle = Vector3.Angle(head.forward, DirToTarget);
+
+        if (Angle <= FOV)
+            return true;
+
+        return false;
+    }
+
+    bool ClearLineOfSight()
+    {
+        RaycastHit Info;
+        if (Physics.Raycast(head.transform.position, (playerScript1.transform.position - head.transform.position).normalized, out Info, col.radius))
+        {
+            if (Info.transform.CompareTag("Player"))
+                return true;
+        }
+        return false;
+    }
+
+    void UpdateSight()
+    {
+        switch (Sensitivtee)
+        {
+            case SightSensitivity.STRICT:
+                seesPlayer = InFOV() && ClearLineOfSight();
+                break;
+            case SightSensitivity.LOOSE:
+                seesPlayer = InFOV() || ClearLineOfSight();
+                break;
+        }
+    }
+
+     void OnTriggerStay(Collider other)
+    {
+        UpdateSight();
+
+        if (seesPlayer)
+            lastPlayerLocation = playerScript1.transform.position;
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+
+        if (!other.CompareTag("Player")) return;
+        seesPlayer = false;
+    }
+    /*
+    void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject == Player1)
+        {
+            // seesPlayer = false;
+            Debug.Log("Player entered sphere");
+
+            Vector3 direction = other.transform.position - transform.position;
+            float angle = Vector3.Angle(direction, transform.forward);
+
+            if (angle < FOV * 0.5f)
+            {
+                Debug.Log("Player within Angle");
+
+                RaycastHit hit;
+
+                
+
+                if (Physics.Raycast(transform.position + transform.up, direction.normalized, out hit, col.radius))
+                {
+                    Debug.Log("Raycast successful");
+
+                    if (hit.collider.gameObject == Player1)
+                    {
+                        seesPlayer = true;
+                        Debug.Log("NPC SEES THE PLAYER");
+
+                    }
+                }
+            }
+        }
+
+    }*/
 }
