@@ -12,7 +12,12 @@ ModelImporter:
   - first:
       74: 1938949765562363497
     second: Alien_Suck_Loop
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert1
+    second: {fileID: 2100000, guid: 822ff9bbd35a53345b5e9620d93553a7, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
