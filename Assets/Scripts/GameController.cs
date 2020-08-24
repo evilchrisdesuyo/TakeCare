@@ -21,6 +21,9 @@ public class GameController : MonoBehaviour
     public Text timerText;
     public Text careInShipText;
 
+    public List<Vector3> animPosition;
+
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -28,6 +31,8 @@ public class GameController : MonoBehaviour
         player1Script = Player1.GetComponent<PlayerScript>();
         if (currentGameState == gameState.Intro)
         {
+            //move ship
+            this.gameObject.transform.position = animPosition[0];
             introLogic();
 
         }
@@ -51,7 +56,7 @@ public class GameController : MonoBehaviour
 
                 timer = 0;
                 timeUp();
-
+                
             }
         }
 
@@ -103,7 +108,7 @@ public class GameController : MonoBehaviour
     {
         //desaturate
         //move cam
-        //move ship
+        
         //play video?
         // hold until cine is done
         //fade back to saturate

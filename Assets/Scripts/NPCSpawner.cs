@@ -14,11 +14,13 @@ public class NPCSpawner : MonoBehaviour
     void Start()
     {
         currentSpawnTimer = spawnFrequency;
+        Player1 = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
     void Update()
     {
+       
         currentSpawnTimer -= 1 * Time.deltaTime;
         if (currentSpawnTimer < 0f)
         {
