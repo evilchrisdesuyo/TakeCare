@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 91c180fb3d1dffa41897ba191ea3e004
+guid: b99b54360f5a3084a865a4d0c593daeb
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable:
@@ -7,17 +7,32 @@ ModelImporter:
       74: 8219576692503372924
     second: Alien_Idle
   - first:
-      74: 4803251510726906274
-    second: Alien_Walk_Weapon
+      74: 3616612052857739177
+    second: Alien_walk_weapon
   - first:
-      74: 1938949765562363497
-    second: Alien_Suck_Loop
+      74: -2792236297547317867
+    second: Alien_Extract
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: lambert1
-    second: {fileID: 2100000, guid: 822ff9bbd35a53345b5e9620d93553a7, type: 2}
+      name: M_clothing
+    second: {fileID: 2100000, guid: 542711ec557c7e7419891b3ae4a56a63, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_eyes
+    second: {fileID: 2100000, guid: 28ada0f9ac3781d488772ee2347e65d5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_metal
+    second: {fileID: 2100000, guid: 8f4bd7b3766333346a0f911fbb5dda93, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_skin
+    second: {fileID: 2100000, guid: 6f3c021b0e2e7dd499139744affb8ebd, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -75,11 +90,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 1
     - serializedVersion: 16
-      name: Alien_Walk_Weapon
+      name: Alien_walk_weapon
       takeName: Alien_Anim
       internalID: 0
       firstFrame: 106
-      lastFrame: 147
+      lastFrame: 149
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -104,7 +119,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 1
     - serializedVersion: 16
-      name: Alien_Suck_Loop
+      name: Alien_Extract
       takeName: Alien_Anim
       internalID: 0
       firstFrame: 154
