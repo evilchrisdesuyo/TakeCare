@@ -6,6 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class NPCScript : MonoBehaviour
 {
+    // NPC Animations
+    public Animator animator;
+    public float speed;
+    Vector3 lastPosition = Vector3.zero;
+
+
     public CharacterController NPCcontroller;
     public GameObject Player1;
     public PlayerScript playerScript1;
@@ -42,16 +48,19 @@ public class NPCScript : MonoBehaviour
     public SightSensitivity Sensitivtee = SightSensitivity.STRICT;
     public bool chasingPlayer = false;
     // Start is called before the first frame update
-    void Awake()
+    private void Awake()
     {
         //Player1 = GetComponent.
 
         Player1 = GameObject.FindGameObjectWithTag("Player");
-        playerScript1 = Player1.GetComponent<PlayerScript>();
+        playerScript1 = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         allWalkTargets = new List<GameObject>();
         allWalkTargets.AddRange(GameObject.FindGameObjectsWithTag("WalkTarget"));
         fleeTargets = new List<GameObject>();
         fleeTargets.AddRange(GameObject.FindGameObjectsWithTag("FleeTarget"));
+
+        // Get NPC Animator
+        animator = this.gameObject.GetComponent<Animator>();
         
         col = GetComponent<SphereCollider>();
         currentFleeTarget = fleeTargets[Random.Range(0, fleeTargets.Count)];
@@ -62,9 +71,20 @@ public class NPCScript : MonoBehaviour
         }
     }
 
+    private void FixedUpdate() {
+        speed = (transform.position - lastPosition).magnitude;
+        lastPosition = transform.position;
+    }
+
     // Update is called once per frame
     void Update()
     {
+        // Animation updates
+        animator.SetFloat("Speed", speed);
+        animator.SetBool("isDrained", drained);
+        animator.SetBool("isScared", currentBehavior.Equals(behaviorState.Fleeing));
+        
+        
        
         if (seesPlayer)
         {
@@ -178,6 +198,7 @@ public class NPCScript : MonoBehaviour
                 draining = false;
                 playerScript1.distanceLight.color = Color.red;//(Color.red / 1f) * Time.deltaTime;
                 playerScript1.tooCloseText.enabled = true;
+                playerScript1.isExtracting = draining;
             }
             else
                 if (distanceToPlayer > tooCloseDistance)
@@ -202,6 +223,7 @@ public class NPCScript : MonoBehaviour
                 draining = false;
                 tooCloseMeter = 0f;
                 playerScript1.distanceLight.color -= (Color.white);// / 2.0f) * Time.deltaTime;
+                playerScript1.isExtracting = draining;
             }
             else
             if (distanceToPlayer < tooFarDistance)
@@ -241,6 +263,7 @@ public class NPCScript : MonoBehaviour
                 //start draining
                 draining = true;
                 playerScript1.distanceLight.color = Color.green;
+                playerScript1.isExtracting = draining;
 
             }
 
@@ -249,6 +272,7 @@ public class NPCScript : MonoBehaviour
         if (Input.GetButtonUp("Fire1") || CARE <= 0 || distanceToPlayer >= tooFarDistance)
         {
             draining = false;
+            playerScript1.isExtracting = draining;
 
         }
         // void OnMouseDown()

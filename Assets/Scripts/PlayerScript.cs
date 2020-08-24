@@ -11,6 +11,7 @@ public class PlayerScript : MonoBehaviour
     public Animator animator;
     public float speed;
     Vector3 lastPosition = Vector3.zero;
+    public bool isExtracting;
 
 
     public CharacterController controller;
@@ -122,6 +123,7 @@ public class PlayerScript : MonoBehaviour
         // Animation updates
         animator.SetBool("isGround", isGrounded);
         animator.SetFloat("Speed", speed);
+        animator.SetBool("Extracting", isExtracting);
 
         //shootTarget.gameobject.material.emmissive = glowing
     }

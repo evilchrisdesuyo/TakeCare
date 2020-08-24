@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 8458376673630460989}
   - component: {fileID: 8458376673630460983}
   - component: {fileID: 8458376673630460980}
+  - component: {fileID: 4766605505963452501}
   m_Layer: 0
   m_Name: NPC-Civilian
   m_TagString: Untagged
@@ -205,6 +206,25 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 15
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!95 &4766605505963452501
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8458376673630460988}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 0a6584e0ceaa02c4186440fdcdc1c2eb, type: 3}
+  m_Controller: {fileID: 9100000, guid: 0c623622a71779b4782a544dfe3b7992, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8458376673990509086
 GameObject:
   m_ObjectHideFlags: 0
