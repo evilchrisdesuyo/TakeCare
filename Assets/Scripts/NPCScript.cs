@@ -165,7 +165,7 @@ public class NPCScript : MonoBehaviour
             }
         }
 
-        if (distanceToPlayerConstant > 200)
+        if (distanceToPlayerConstant > 150)
         {
             Destroy(this.gameObject);
         }
