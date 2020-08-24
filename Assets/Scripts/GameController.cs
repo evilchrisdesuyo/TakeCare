@@ -20,9 +20,9 @@ public class GameController : MonoBehaviour
     public Collider dispensorVolume;
     public Text timerText;
     public Text careInShipText;
-
-    public List<Vector3> animPosition;
-
+    public Animator anim;
+    //public List<Vector3> animPosition;
+    //public int currentAnimPosition;
 
     // Start is called before the first frame update
     void Awake()
@@ -32,7 +32,7 @@ public class GameController : MonoBehaviour
         if (currentGameState == gameState.Intro)
         {
             //move ship
-            this.gameObject.transform.position = animPosition[0];
+            //this.gameObject.transform.position = animPosition[0];
             introLogic();
 
         }
@@ -41,6 +41,12 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (currentGameState == gameState.Intro)
+        {
+            Player1.transform.position = this.transform.position;
+        }
+
         timerText.text = timer.ToString();
         careInShipText.text = careInShip + "/" + careCapacity ; //careInShip.ToString("/" + careCapacity);
 
@@ -61,7 +67,7 @@ public class GameController : MonoBehaviour
         }
 
 
-      
+     // if ()
 
         if (Input.GetButton("Fire2"))
         {
