@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
     public float timer = 800f;
+    public float timerMax = 800f;
     public bool timerActive = true;
     public float careInShip = 0f;
     public float careCapacity = 1000;
@@ -21,6 +22,8 @@ public class GameController : MonoBehaviour
     public Text timerText;
     public Text careInShipText;
     public Animator anim;
+    public string theLevel;
+    public Text tutorial;
     //public List<Vector3> animPosition;
     //public int currentAnimPosition;
 
@@ -30,12 +33,13 @@ public class GameController : MonoBehaviour
         //player1 = findgamobjectwithtag("player")
         player1Script = Player1.GetComponent<PlayerScript>();
         //if (currentGameState == gameState.Intro)
-       // {
-            //move ship
-            //this.gameObject.transform.position = animPosition[0];
-            //introLogic();
+        // {
+        //move ship
+        //this.gameObject.transform.position = animPosition[0];
+        //introLogic();
 
-      //  }
+        //  }
+        tutorial.enabled = false;
     }
 
     // Update is called once per frame
@@ -66,7 +70,13 @@ public class GameController : MonoBehaviour
         distanceToPlayer = Vector3.Distance(Player1.transform.position, this.transform.position);
         playerCare = player1Script.CAREstolen;
 
-        if (timerActive && currentGameState == gameState.Gameplay)
+        if (timer >= timerMax - 10 && currentGameState == gameState.Gameplay)
+        {
+            tutorial.enabled = true;
+            tutorial.text = "Collect C.A.R.E from Humanoids. Return it to Ship. Avoid Hostiles...";
+        }
+
+            if (timerActive && currentGameState == gameState.Gameplay)
         {
             timer -= 1 * Time.deltaTime;
            
@@ -159,34 +169,16 @@ public class GameController : MonoBehaviour
             //winner is you
 
 
-            //Scene sceneToLoad = SceneManager.GetSceneByName("Success");//SceneManager.GetSceneByBuildIndex(4);
-            //SceneManager.MoveGameObjectToScene(this.gameObject, SceneManager.GetSceneByName("Success"));
-            // SceneManager.MoveGameObjectToScene(Player1, SceneManager.GetSceneByName("Success"));
+            //Scene sceneToLoad = SceneManager.GetSceneByName(Success);//SceneManager.GetSceneByBuildIndex(4);
+            // SceneManager.MoveGameObjectToScene(this.gameObject, SceneManager.GetSceneByName(theLevel));
+            //SceneManager.MoveGameObjectToScene(Player1, SceneManager.GetSceneByName(theLevel));
 
-             SceneManager.LoadScene("Success");
-           // LoadYourAsyncScene();
+              SceneManager.LoadScene("Success");
+            // LoadYourAsyncScene();
+            //StartCoroutine(LoadYourAsyncScene());
         }
 
-        /*
-        IEnumerator LoadYourAsyncScene()
-        {
-            // Set the current Scene to be able to unload it later
-            Scene currentScene = SceneManager.GetActiveScene();
-
-            // The Application loads the Scene in the background at the same time as the current Scene.
-            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(m_Scene, LoadSceneMode.Additive);
-
-            // Wait until the last operation fully loads to return anything
-            while (!asyncLoad.isDone)
-            {
-                yield return null;
-            }
-
-            // Move the GameObject (you attach this in the Inspector) to the newly loaded Scene
-            SceneManager.MoveGameObjectToScene(m_MyGameObject, SceneManager.GetSceneByName(m_Scene));
-            // Unload the previous Scene
-            SceneManager.UnloadSceneAsync(currentScene);
-        }*/
+        
     }
 
 

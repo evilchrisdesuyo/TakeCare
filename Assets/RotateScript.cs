@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RotateScript : MonoBehaviour
 {
+    public float speed;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,6 +14,6 @@ public class RotateScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        transform.Rotate(speed * Time.deltaTime, 0, 0);
     }
 }
