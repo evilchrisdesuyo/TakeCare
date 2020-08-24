@@ -5,34 +5,32 @@ ModelImporter:
   internalIDToNameTable:
   - first:
       74: 8219576692503372924
-    second: Alien_Idle
+    second: Alien_Anim
   - first:
-      74: 3616612052857739177
+      74: -5757758571842540250
+    second: Idle
+  - first:
+      74: 6527001351349641766
     second: Alien_walk_weapon
   - first:
-      74: -2792236297547317867
+      74: -1447322496148272259
     second: Alien_Extract
-  externalObjects:
   - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: M_clothing
-    second: {fileID: 2100000, guid: 542711ec557c7e7419891b3ae4a56a63, type: 2}
+      74: 6854618123551301788
+    second: Alien_Takeoff
   - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: M_eyes
-    second: {fileID: 2100000, guid: 28ada0f9ac3781d488772ee2347e65d5, type: 2}
+      74: 6928671678620951343
+    second: Alien_jumpUpLoop
   - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: M_metal
-    second: {fileID: 2100000, guid: 8f4bd7b3766333346a0f911fbb5dda93, type: 2}
+      74: 7546013028216176666
+    second: Alien_ApexTransition
   - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: M_skin
-    second: {fileID: 2100000, guid: 6f3c021b0e2e7dd499139744affb8ebd, type: 2}
+      74: 566274254008803164
+    second: Alien_jumpDownLoop
+  - first:
+      74: 7577581417481415846
+    second: Alien_Landing
+  externalObjects: {}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -61,7 +59,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Alien_Idle
+      name: Idle
       takeName: Alien_Anim
       internalID: 0
       firstFrame: 1
@@ -131,6 +129,151 @@ ModelImporter:
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: Alien_Takeoff
+      takeName: Alien_Anim
+      internalID: 0
+      firstFrame: 165
+      lastFrame: 178
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: Alien_jumpUpLoop
+      takeName: Alien_Anim
+      internalID: 0
+      firstFrame: 178
+      lastFrame: 179
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: Alien_ApexTransition
+      takeName: Alien_Anim
+      internalID: 0
+      firstFrame: 179
+      lastFrame: 186
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: Alien_jumpDownLoop
+      takeName: Alien_Anim
+      internalID: 0
+      firstFrame: 186
+      lastFrame: 187
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: Alien_Landing
+      takeName: Alien_Anim
+      internalID: 0
+      firstFrame: 187
+      lastFrame: 196
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
