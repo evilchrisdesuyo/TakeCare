@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class NPCScript : MonoBehaviour
 {
@@ -87,9 +88,13 @@ public class NPCScript : MonoBehaviour
         {
             agent.SetDestination(playerScript1.transform.position);
         }
-        
 
-        if (currentBehavior == behaviorState.Fleeing)
+        if (chasingPlayer && distanceToPlayer < 2f)
+        {
+            SceneManager.LoadScene("Failure-Captured");
+        }
+
+            if (currentBehavior == behaviorState.Fleeing)
         {
             Vector3 target = new Vector3(currentFleeTarget.transform.position.x, currentFleeTarget.transform.position.y, currentFleeTarget.transform.position.z);
             agent.speed = 19;
