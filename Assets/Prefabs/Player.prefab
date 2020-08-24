@@ -123,7 +123,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 472851507028526317}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &472851507028526323
 GameObject:
@@ -156,7 +156,6 @@ Transform:
   m_Children:
   - {fileID: 472851507098675291}
   - {fileID: 6504004127868600618}
-  - {fileID: 7502687034204620023}
   - {fileID: 472851506912491823}
   - {fileID: 472851507605204445}
   m_Father: {fileID: 0}
@@ -192,7 +191,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58d278fe179c78b458464a7e2be2d7d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  speed: 0
   controller: {fileID: 472851507028526316}
+  alien: {fileID: 0}
   cam: {fileID: 0}
   movementSpeed: 6
   turnSmoothing: 0.1
@@ -209,6 +211,8 @@ MonoBehaviour:
   distanceLight: {fileID: 472851507605204446}
   playerCareText: {fileID: 0}
   tooCloseText: {fileID: 0}
+  gamePaused: 0
+  pauseUI: {fileID: 0}
 --- !u!1 &472851507098675294
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,7 +435,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 472851507028526317}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!108 &472851507605204446
 Light:
@@ -615,12 +619,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7502687034204620022}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.11839524, y: -0.335, z: 0.225}
+  m_LocalRotation: {x: 0.5379305, y: -0.23115376, z: -0.71877986, w: 0.37490565}
+  m_LocalPosition: {x: 0.106944084, y: 0.32546842, z: 0.01995328}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 472851507028526317}
-  m_RootOrder: 2
+  m_Father: {fileID: 2247571916523047020}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!33 &7502687034204620021
 MeshFilter:
@@ -649,7 +653,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 5561349426305759274, guid: e620b8410d88d7a4ca57b1d44c03b609, type: 3}
+  - {fileID: 2100000, guid: 8f4bd7b3766333346a0f911fbb5dda93, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -736,13 +740,24 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b99b54360f5a3084a865a4d0c593daeb,
         type: 3}
       propertyPath: m_Name
-      value: Alien_Anim (1)
+      value: Alien_Anim
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: b99b54360f5a3084a865a4d0c593daeb,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: bab6d329ff94bfd4da37bfc116aa6988, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b99b54360f5a3084a865a4d0c593daeb, type: 3}
 --- !u!4 &6504004127868600618 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b99b54360f5a3084a865a4d0c593daeb,
+    type: 3}
+  m_PrefabInstance: {fileID: 6757761424328828609}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2247571916523047020 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -4397590720878924115, guid: b99b54360f5a3084a865a4d0c593daeb,
     type: 3}
   m_PrefabInstance: {fileID: 6757761424328828609}
   m_PrefabAsset: {fileID: 0}

@@ -7,9 +7,17 @@ using UnityEngine.SceneManagement;
 
 public class PlayerScript : MonoBehaviour
 {
+    // Animation Variables
+    public Animator animator;
+    public float speed;
+    Vector3 lastPosition = Vector3.zero;
+
+
     public CharacterController controller;
+    public GameObject alien;
     public Transform cam;
     public float movementSpeed = 6f;
+    
     public float turnSmoothing = 0.1f;
     public float turnSmoothingVelocity;
     float gravity = -9.81f;
@@ -31,13 +39,22 @@ public class PlayerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       // playerCareText = ----------------------------------------------------
-      //tooCloseText = ---------------------------------------------------
+        // playerCareText = ----------------------------------------------------
+        //tooCloseText = ---------------------------------------------------
 
-    //get character controller
-    Cursor.lockState = CursorLockMode.Locked;
+        //get character controller
+        Cursor.lockState = CursorLockMode.Locked;
         distanceLight.color -= (Color.white / 2.0f) * Time.deltaTime;
         tooCloseText.enabled = false;
+
+        // Get aliens animator
+        animator = alien.gameObject.GetComponent<Animator>();
+
+    }
+
+    private void FixedUpdate() {
+        speed = (transform.position - lastPosition).magnitude;
+        lastPosition = transform.position;
     }
 
     // Update is called once per frame
@@ -48,7 +65,8 @@ public class PlayerScript : MonoBehaviour
             CAREstolen = 0;
         }
 
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        //isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        isGrounded = true;
 
         if (isGrounded && velocity.y < 0)
         {
@@ -100,6 +118,10 @@ public class PlayerScript : MonoBehaviour
         }
 
         findClosestNPC();
+
+        // Animation updates
+        animator.SetBool("isGround", isGrounded);
+        animator.SetFloat("Speed", speed);
 
         //shootTarget.gameobject.material.emmissive = glowing
     }
