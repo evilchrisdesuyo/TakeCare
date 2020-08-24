@@ -609,6 +609,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8973566725389708689}
+  - component: {fileID: 8595024419432490969}
+  - component: {fileID: 7860970412444701041}
+  - component: {fileID: 4932056094057379899}
+  - component: {fileID: 6619969022990432344}
   m_Layer: 0
   m_Name: ExteriorFenceTest
   m_TagString: Untagged
@@ -667,6 +671,58 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8595024419432490969
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4211071433716024015}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.20840067, y: 1.2810898, z: 17.815058}
+  m_Center: {x: -0.03364057, y: 0.5419922, z: -7.8950357}
+--- !u!65 &7860970412444701041
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4211071433716024015}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 18.230482, y: 1.191838, z: 0.22810358}
+  m_Center: {x: 8.987155, y: 0.58265936, z: 1.0026612}
+--- !u!65 &4932056094057379899
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4211071433716024015}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.22571939, y: 1.2139614, z: 17.974403}
+  m_Center: {x: 18.0208, y: 0.5766405, z: -7.871666}
+--- !u!65 &6619969022990432344
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4211071433716024015}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 18.30317, y: 1.2962542, z: 0.18272395}
+  m_Center: {x: 9.025055, y: 0.53673077, z: -16.774437}
 --- !u!1 &4285532386002462643
 GameObject:
   m_ObjectHideFlags: 0
