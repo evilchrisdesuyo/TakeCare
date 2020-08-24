@@ -66,8 +66,8 @@ public class PlayerScript : MonoBehaviour
             CAREstolen = 0;
         }
 
-        //isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-        isGrounded = true;
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        //isGrounded = true;
 
         if (isGrounded && velocity.y < 0)
         {
@@ -87,6 +87,8 @@ public class PlayerScript : MonoBehaviour
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
                 controller.Move(moveDir.normalized * movementSpeed * Time.deltaTime);
+
+            
         }
         
 
