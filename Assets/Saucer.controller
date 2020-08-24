@@ -33,7 +33,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 2
+    m_ConditionEvent: PauseAnims
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -7345260096886663193}
   m_Solo: 0
@@ -59,10 +62,10 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -420620360932327721}
-    m_Position: {x: 270, y: 80, z: 0}
+    m_Position: {x: 250, y: 50, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1499359327627785940}
-    m_Position: {x: 500, y: 70, z: 0}
+    m_Position: {x: 540, y: 70, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7345260096886663193}
     m_Position: {x: 510, y: 190, z: 0}
@@ -113,13 +116,7 @@ AnimatorController:
   m_Name: Saucer
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: PlayingAnimation
-    m_Type: 4
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 0}
-  - m_Name: Stopped
+  - m_Name: PauseAnims
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -172,7 +169,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 2
+    m_ConditionEvent: PauseAnims
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1499359327627785940}
   m_Solo: 0
@@ -201,9 +201,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 1.2637749
   m_TransitionOffset: 0
-  m_ExitTime: 0.95
+  m_ExitTime: 0.93224293
   m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0

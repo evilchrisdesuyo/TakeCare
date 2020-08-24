@@ -47,16 +47,27 @@ public class GameController : MonoBehaviour
             Player1.transform.position = this.transform.position;
         }
 
-        timerText.text = timer.ToString();
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("SaucerStopped"))
+        {
+            currentGameState = gameState.Gameplay;
+        }
+
+            timerText.text = timer.ToString();
         careInShipText.text = careInShip + "/" + careCapacity ; //careInShip.ToString("/" + careCapacity);
 
         distanceToPlayer = Vector3.Distance(Player1.transform.position, this.transform.position);
         playerCare = player1Script.CAREstolen;
 
-        if (timerActive)
+        if (timerActive && currentGameState == gameState.Gameplay)
         {
             timer -= 1 * Time.deltaTime;
-            if (timer <= 0)
+           
+            if (timer < 60)
+            {
+                timerText.color = Color.red;
+            }
+
+                if (timer <= 0)
             {
                 Debug.Log("TIME UP");
 

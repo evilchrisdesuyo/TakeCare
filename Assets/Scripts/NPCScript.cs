@@ -45,6 +45,7 @@ public class NPCScript : MonoBehaviour
     void Awake()
     {
         //Player1 = GetComponent.
+
         Player1 = GameObject.FindGameObjectWithTag("Player");
         playerScript1 = Player1.GetComponent<PlayerScript>();
         allWalkTargets = new List<GameObject>();
@@ -133,7 +134,7 @@ public class NPCScript : MonoBehaviour
 
             distanceToTarget = Vector3.Distance(currentWalkTarget.transform.position, transform.position);
 
-            if (distanceToTarget < 2f)
+            if (distanceToTarget < 5f)
             {
                 currentBehavior = behaviorState.Idle;
                 //MAKE THIS A RANDOM RANGE
