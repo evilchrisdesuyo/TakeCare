@@ -30,7 +30,32 @@ ModelImporter:
   - first:
       74: 7577581417481415846
     second: Alien_Landing
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_clothing
+    second: {fileID: 2100000, guid: 542711ec557c7e7419891b3ae4a56a63, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_energy
+    second: {fileID: 2100000, guid: 472357bc5cc1de040b7c76523867b59a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_eyes
+    second: {fileID: 2100000, guid: 28ada0f9ac3781d488772ee2347e65d5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_metal
+    second: {fileID: 2100000, guid: 8f4bd7b3766333346a0f911fbb5dda93, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_skin
+    second: {fileID: 2100000, guid: 6f3c021b0e2e7dd499139744affb8ebd, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
