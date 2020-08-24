@@ -489,7 +489,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 143220384}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 35.6, y: -13.5, z: 100.09}
+  m_LocalPosition: {x: 111.43, y: -37, z: 204}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1136,8 +1136,8 @@ MonoBehaviour:
       enableFptlForForwardOpaque: 0
       enableBigTilePrepass: 0
       isFptlEnabled: 0
-  clearColorMode: 0
-  backgroundColorHDR: {r: 0.0039159823, g: 0.010883395, b: 0.028301895, a: 0}
+  clearColorMode: 1
+  backgroundColorHDR: {r: 0.00011866376, g: 0.0054755975, b: 0.01886791, a: 0}
   clearDepth: 1
   volumeLayerMask:
     serializedVersion: 2
@@ -1200,6 +1200,7 @@ GameObject:
   - component: {fileID: 866957784}
   - component: {fileID: 866957783}
   - component: {fileID: 866957782}
+  - component: {fileID: 866957786}
   m_Layer: 0
   m_Name: earth
   m_TagString: Untagged
@@ -1283,6 +1284,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: -22.18, y: 29.659, z: -20.195}
+--- !u!114 &866957786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 866957781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 952a58f0a15464d4382fe5590c9c53f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &870980392
 GameObject:
   m_ObjectHideFlags: 0

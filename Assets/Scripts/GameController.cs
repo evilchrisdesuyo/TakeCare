@@ -157,9 +157,38 @@ public class GameController : MonoBehaviour
         {
             Debug.Log("Running win logic");
             //winner is you
-            SceneManager.LoadScene("Success");
+
+
+            //Scene sceneToLoad = SceneManager.GetSceneByName("Success");//SceneManager.GetSceneByBuildIndex(4);
+            //SceneManager.MoveGameObjectToScene(this.gameObject, SceneManager.GetSceneByName("Success"));
+            // SceneManager.MoveGameObjectToScene(Player1, SceneManager.GetSceneByName("Success"));
+
+             SceneManager.LoadScene("Success");
+           // LoadYourAsyncScene();
         }
+
+        /*
+        IEnumerator LoadYourAsyncScene()
+        {
+            // Set the current Scene to be able to unload it later
+            Scene currentScene = SceneManager.GetActiveScene();
+
+            // The Application loads the Scene in the background at the same time as the current Scene.
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(m_Scene, LoadSceneMode.Additive);
+
+            // Wait until the last operation fully loads to return anything
+            while (!asyncLoad.isDone)
+            {
+                yield return null;
+            }
+
+            // Move the GameObject (you attach this in the Inspector) to the newly loaded Scene
+            SceneManager.MoveGameObjectToScene(m_MyGameObject, SceneManager.GetSceneByName(m_Scene));
+            // Unload the previous Scene
+            SceneManager.UnloadSceneAsync(currentScene);
+        }*/
     }
+
 
 
 }
