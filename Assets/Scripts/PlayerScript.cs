@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class PlayerScript : MonoBehaviour
     public Light distanceLight;
     public Text playerCareText;
     public Text tooCloseText;
+    public bool gamePaused = false;
+    public GameObject pauseUI;
 
     // Start is called before the first frame update
     void Start()
@@ -86,6 +89,14 @@ public class PlayerScript : MonoBehaviour
         {
             //Application.Quit();
             //pause menu
+            if (gamePaused)
+            {
+                Resume();
+            }
+            else
+            {
+                Pause();
+            }
         }
 
         findClosestNPC();
@@ -120,6 +131,31 @@ public class PlayerScript : MonoBehaviour
 
         Debug.DrawLine(this.transform.position, closestNPC.transform.position);
     }
-    
-    
+
+    public void Resume()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        pauseUI.SetActive(false);
+        Time.timeScale = 1f;
+        gamePaused = false;
+    }
+
+   public void Pause()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        pauseUI.SetActive(true);
+        Time.timeScale = 0f;
+        gamePaused = true;
+    }
+
+    //main menu
+    public void MainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+    //quit
+    public void quit()
+    {
+        Application.Quit();
+    }
 }

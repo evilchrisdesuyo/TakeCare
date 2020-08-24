@@ -32,7 +32,7 @@ public class NPCScript : MonoBehaviour
     public float idleTimer;
     public float distanceToTarget;
 
-    public float FOV = 45f;
+    public float FOV = 90f;
     public bool seesPlayer;
     private SphereCollider col;
     public Transform head;
@@ -77,6 +77,7 @@ public class NPCScript : MonoBehaviour
                 if (!hostile)
             {
                 currentBehavior = behaviorState.Fleeing;
+                idleTimer = 0;
             }
         }
 
@@ -90,13 +91,15 @@ public class NPCScript : MonoBehaviour
             agent.SetDestination(playerScript1.transform.position);
         }
 
-        if (chasingPlayer && distanceToPlayer < 2f)
+        if (chasingPlayer && distanceToPlayer < 0.5f)
         {
             SceneManager.LoadScene("Failure-Captured");
         }
 
-            if (currentBehavior == behaviorState.Fleeing)
+            if (currentBehavior == behaviorState.Fleeing && currentBehavior != behaviorState.Walking)
         {
+            currentWalkTarget = null;
+           // agent.prio
             Vector3 target = new Vector3(currentFleeTarget.transform.position.x, currentFleeTarget.transform.position.y, currentFleeTarget.transform.position.z);
             agent.speed = 19;
             agent.SetDestination(target);
@@ -119,7 +122,7 @@ public class NPCScript : MonoBehaviour
         }
 
 
-        if (currentBehavior == behaviorState.Walking)
+        if (currentBehavior == behaviorState.Walking && currentBehavior != behaviorState.Fleeing)
         {
             Vector3 target = new Vector3(currentWalkTarget.transform.position.x, currentWalkTarget.transform.position.y, currentWalkTarget.transform.position.z);
             if (!hostile)
@@ -142,7 +145,7 @@ public class NPCScript : MonoBehaviour
             }
         }
 
-        if (distanceToPlayer > 100)
+        if (distanceToPlayerConstant > 200)
         {
             Destroy(this.gameObject);
         }

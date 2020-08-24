@@ -29,26 +29,34 @@ public class GameController : MonoBehaviour
     {
         //player1 = findgamobjectwithtag("player")
         player1Script = Player1.GetComponent<PlayerScript>();
-        if (currentGameState == gameState.Intro)
-        {
+        //if (currentGameState == gameState.Intro)
+       // {
             //move ship
             //this.gameObject.transform.position = animPosition[0];
-            introLogic();
+            //introLogic();
 
-        }
+      //  }
     }
 
     // Update is called once per frame
     void Update()
     {
 
+        // if (currentGameState == gameState.Intro)
+        // {
+        // Debug.Log("player should be moving");
+        //  Player1.transform.position = this.transform.position;
+        //}
         if (currentGameState == gameState.Intro)
         {
-            Player1.transform.position = this.transform.position;
+            player1Script.enabled = false;
+            Debug.Log("player should be moving");
+            Player1.transform.position = this.gameObject.transform.position;
         }
 
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("SaucerStopped"))
         {
+            player1Script.enabled = true;
             currentGameState = gameState.Gameplay;
         }
 

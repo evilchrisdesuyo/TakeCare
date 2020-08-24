@@ -13,7 +13,7 @@ public class MenuController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        Cursor.lockState = CursorLockMode.None;
     }
 
     // Update is called once per frame
@@ -23,7 +23,7 @@ public class MenuController : MonoBehaviour
         //move ship
         if (saucer != null && newGameLogic)
         {
-            float step = 10 * Time.deltaTime;
+            float step = 20 * Time.deltaTime;
             saucer.transform.position = Vector3.MoveTowards(saucer.transform.position, saucerEndPoint.transform.position, step);
 
             if (distanceToTarget < 0.1)
@@ -59,6 +59,12 @@ public class MenuController : MonoBehaviour
     public void credits()
     {
         SceneManager.LoadScene("Credits");
+    }
+
+    //Testlevel 
+    public void testLevel()
+    {
+        SceneManager.LoadScene("evilChrisWhitebox");
     }
 
     //quit

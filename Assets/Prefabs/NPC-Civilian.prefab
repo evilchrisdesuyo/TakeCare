@@ -185,7 +185,7 @@ MonoBehaviour:
   agent: {fileID: 8458376673630460989}
   idleTimer: 0
   distanceToTarget: 0
-  FOV: 45
+  FOV: 90
   seesPlayer: 0
   head: {fileID: 8458376673990509087}
   lastPlayerLocation: {x: 0, y: 0, z: 0}
