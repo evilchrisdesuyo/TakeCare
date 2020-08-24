@@ -160,7 +160,7 @@ public class PlayerScript : MonoBehaviour
 
     public void Resume()
     {
-        Cursor.lockState = CursorLockMode.None;
+        Cursor.lockState = CursorLockMode.Locked;
         pauseUI.SetActive(false);
         Time.timeScale = 1f;
         gamePaused = false;
@@ -168,7 +168,7 @@ public class PlayerScript : MonoBehaviour
 
    public void Pause()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.None;
         pauseUI.SetActive(true);
         Time.timeScale = 0f;
         gamePaused = true;
