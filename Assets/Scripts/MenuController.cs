@@ -23,12 +23,13 @@ public class MenuController : MonoBehaviour
         //move ship
         if (saucer != null && newGameLogic)
         {
-            float step = 20 * Time.deltaTime;
+            float step = 30 * Time.deltaTime;
             saucer.transform.position = Vector3.MoveTowards(saucer.transform.position, saucerEndPoint.transform.position, step);
 
             if (distanceToTarget < 0.1)
             {
-                resume();
+               // resume();
+                SceneManager.LoadScene("video");
             }
         }
     }
@@ -36,6 +37,7 @@ public class MenuController : MonoBehaviour
     //newgame
     public void newGame()
     {
+        
         newGameLogic = true;
         //play video
         //when video done

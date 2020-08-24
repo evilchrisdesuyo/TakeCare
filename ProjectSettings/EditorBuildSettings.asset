@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Test scenes/evilChrisWhitebox.unity
     guid: 3a61c590c831397408298a9cd5f1ac7e
+  - enabled: 1
+    path: Assets/Scenes/video.unity
+    guid: 7021cb384531ce94bb43306d8de1d8fb
   m_configObjects: {}
