@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.33311632, g: 0.4989613, b: 0.8330084, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -221,9 +221,9 @@ RectTransform:
   m_Father: {fileID: 1662418884}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 527.34, y: 0}
   m_SizeDelta: {x: 500, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &455593807
@@ -259,8 +259,17 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Level Design \nCore Design\nAudio\nRigging\nAnimaiton\nCharacter Art\nEnvironment
-    Art"
+  m_Text: 'Level Design  - Eric Andrews
+
+    Core Design - Chris Sharpe
+
+    Audio
+    - Andres Boissiere
+
+    Tech Art & Animaiton  - Anthony Davis
+
+    Character
+    Art / Environment Art - Travis Baptiste'
 --- !u!222 &455593808
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -494,20 +503,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 402670516019715035, guid: 8dcfb0527d0d2624eacbbeecaa9b94c3,
+    - target: {fileID: 402670516019715034, guid: 8dcfb0527d0d2624eacbbeecaa9b94c3,
         type: 3}
-      propertyPath: m_LocalPosition.x
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 402670516019715035, guid: 8dcfb0527d0d2624eacbbeecaa9b94c3,
         type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 8.79
+      objectReference: {fileID: 0}
+    - target: {fileID: 402670516019715035, guid: 8dcfb0527d0d2624eacbbeecaa9b94c3,
+        type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.301
+      value: -1.76
       objectReference: {fileID: 0}
     - target: {fileID: 402670516019715035, guid: 8dcfb0527d0d2624eacbbeecaa9b94c3,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6.707
+      value: 10.71
       objectReference: {fileID: 0}
     - target: {fileID: 402670516019715035, guid: 8dcfb0527d0d2624eacbbeecaa9b94c3,
         type: 3}
@@ -569,6 +583,22 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1483300375}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1483300378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1483300377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 952a58f0a15464d4382fe5590c9c53f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 20
+  rotateX: 0
+  rotateY: 1
+  rotateZ: 0
 --- !u!1 &1662418880
 GameObject:
   m_ObjectHideFlags: 0
