@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-    public float timer = 800f;
+     float timer;
     public float timerMax = 800f;
     public bool timerActive = true;
     public float careInShip = 0f;
@@ -24,12 +24,16 @@ public class GameController : MonoBehaviour
     public Animator anim;
     public string theLevel;
     public Text tutorial;
+   public bool playerNeverWalked = true;
     //public List<Vector3> animPosition;
     //public int currentAnimPosition;
 
     // Start is called before the first frame update
     void Awake()
     {
+        
+
+        timer = timerMax;
         //player1 = findgamobjectwithtag("player")
         player1Script = Player1.GetComponent<PlayerScript>();
         //if (currentGameState == gameState.Intro)
@@ -39,18 +43,24 @@ public class GameController : MonoBehaviour
         //introLogic();
 
         //  }
-        tutorial.enabled = false;
+        // tutorial.enabled = false;
+        Debug.Log("set to inactive 1");
+        tutorial.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (currentGameState == gameState.Gameplay && player1Script.walkInput == true)
+        {
+            playerNeverWalked = false;
+        }
         // if (currentGameState == gameState.Intro)
         // {
         // Debug.Log("player should be moving");
         //  Player1.transform.position = this.transform.position;
         //}
+       
         if (currentGameState == gameState.Intro)
         {
             player1Script.enabled = false;
@@ -70,13 +80,42 @@ public class GameController : MonoBehaviour
         distanceToPlayer = Vector3.Distance(Player1.transform.position, this.transform.position);
         playerCare = player1Script.CAREstolen;
 
-        if (timer >= timerMax - 10 && currentGameState == gameState.Gameplay)
+        if (timer >= (timerMax - 10f) && currentGameState == gameState.Gameplay)
         {
-            tutorial.enabled = true;
+            Debug.Log("tut showing");
+            tutorial.gameObject.SetActive(true);
             tutorial.text = "Collect C.A.R.E from Humanoids. Return it to Ship. Avoid Hostiles...";
+            
         }
 
-            if (timerActive && currentGameState == gameState.Gameplay)
+        if (timer <= (timerMax - 10f) && timer >= (timerMax - 12f) && currentGameState == gameState.Gameplay)
+        {
+            Debug.Log("set to inactive 2");
+            tutorial.gameObject.SetActive(false);
+
+        }
+
+        if (timer <= (timerMax - 20f)  && currentGameState == gameState.Gameplay && playerNeverWalked)
+        {
+            Debug.Log("tut showing");
+            tutorial.gameObject.SetActive(true);
+            tutorial.text = "Use WASD to move";
+
+        }
+        if (playerNeverWalked == false)
+        {
+            Debug.Log("set to inactive 3");
+            tutorial.gameObject.SetActive(false);
+        }
+
+            if (timer <= (timerMax - 5f) && currentGameState == gameState.Gameplay)
+        {
+            tutorial.gameObject.SetActive(false);
+
+        }
+
+
+        if (timerActive && currentGameState == gameState.Gameplay)
         {
             timer -= 1 * Time.deltaTime;
            
@@ -114,6 +153,27 @@ public class GameController : MonoBehaviour
 
             }
 
+            if (distanceToPlayer < 5 && player1Script.CAREstolen > 0 && !dispensing)
+            {
+                Debug.Log("tut showing");
+                tutorial.gameObject.SetActive(true);
+                tutorial.text = "Stand under your ship and hold Right Mouse Button to dispense C.A.R.E";
+
+            }else
+            if (dispensing)
+            {
+                Debug.Log("tut closed");
+                tutorial.gameObject.SetActive(false);
+               
+
+            }
+
+            if (timer <= (timerMax - 5f) && currentGameState == gameState.Gameplay)
+            {
+                Debug.Log("set inactive 4");
+                tutorial.gameObject.SetActive(false);
+
+            }
 
         }
         if (Input.GetButtonUp("Fire2") || playerCare <= 0 || distanceToPlayer >= 5f)

@@ -26,7 +26,7 @@ public class PlayerScript : MonoBehaviour
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
     Vector3 velocity;
-    bool isGrounded;
+    public bool isGrounded;
     public float jumpHeight = 3f;
     public Transform carry;
     public Transform shootTarget;
@@ -34,8 +34,7 @@ public class PlayerScript : MonoBehaviour
     public Light distanceLight;
     public Text playerCareText;
     public Text tooCloseText;
-    public bool gamePaused = false;
-    public GameObject pauseUI;
+    public bool walkInput = false;
 
     // Start is called before the first frame update
     void Start()
@@ -77,7 +76,15 @@ public class PlayerScript : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
-        
+
+        if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+        {
+            walkInput = true;
+        }
+        else
+        {
+            walkInput = false;
+        }
 
         if (direction.magnitude >= 0.1f)
         {
@@ -106,19 +113,7 @@ public class PlayerScript : MonoBehaviour
         //carry.rb = enabled
         //carry =null
 
-        if (Input.GetButtonDown("Cancel"))
-        {
-            //Application.Quit();
-            //pause menu
-            if (gamePaused)
-            {
-                Resume();
-            }
-            else
-            {
-                Pause();
-            }
-        }
+       
 
         findClosestNPC();
 
@@ -158,30 +153,6 @@ public class PlayerScript : MonoBehaviour
         Debug.DrawLine(this.transform.position, closestNPC.transform.position);
     }
 
-    public void Resume()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-        pauseUI.SetActive(false);
-        Time.timeScale = 1f;
-        gamePaused = false;
-    }
+    
 
-   public void Pause()
-    {
-        Cursor.lockState = CursorLockMode.None;
-        pauseUI.SetActive(true);
-        Time.timeScale = 0f;
-        gamePaused = true;
-    }
-
-    //main menu
-    public void MainMenu()
-    {
-        SceneManager.LoadScene("MainMenu");
-    }
-    //quit
-    public void quit()
-    {
-        Application.Quit();
-    }
 }

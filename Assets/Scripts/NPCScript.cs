@@ -47,6 +47,7 @@ public class NPCScript : MonoBehaviour
     public enum SightSensitivity { STRICT, LOOSE};
     public SightSensitivity Sensitivtee = SightSensitivity.STRICT;
     public bool chasingPlayer = false;
+    public bool goldieLocks;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -197,6 +198,7 @@ public class NPCScript : MonoBehaviour
                 tooClose = true;
                 draining = false;
                 playerScript1.distanceLight.color = Color.red;//(Color.red / 1f) * Time.deltaTime;
+                goldieLocks = false;
                 playerScript1.tooCloseText.enabled = true;
                 playerScript1.isExtracting = draining;
             }
@@ -233,6 +235,7 @@ public class NPCScript : MonoBehaviour
             if (!tooClose && !tooFar && playerScript1.shootTarget == this.gameObject.transform)
             {
                 playerScript1.distanceLight.color = Color.yellow;
+                goldieLocks = false;
             }
         }
 
@@ -264,6 +267,7 @@ public class NPCScript : MonoBehaviour
                 draining = true;
                 playerScript1.distanceLight.color = Color.green;
                 playerScript1.isExtracting = draining;
+                goldieLocks = false;
 
             }
 
