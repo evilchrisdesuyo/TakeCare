@@ -46,7 +46,7 @@ public class PlayerScript : MonoBehaviour
 
         //get character controller
         Cursor.lockState = CursorLockMode.Locked;
-        distanceLight.color -= (Color.white / 2.0f) * Time.deltaTime;
+        distanceLight.enabled = false;//.color -= (Color.white / 2.0f) * Time.deltaTime;
         tooCloseText.enabled = false;
 
         // Get aliens animator

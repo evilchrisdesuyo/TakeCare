@@ -24,7 +24,7 @@ public class NPCScript : MonoBehaviour
     bool tooFar;
     public float secsTilPassout = 10f;
     public float tooCloseMeter = 0f;
-    public bool dead = false;
+
     public bool draining = false;
     public bool drained = false;
     public float CARE = 10;
@@ -47,7 +47,8 @@ public class NPCScript : MonoBehaviour
     public enum SightSensitivity { STRICT, LOOSE};
     public SightSensitivity Sensitivtee = SightSensitivity.STRICT;
     public bool chasingPlayer = false;
-   
+    public LineRenderer sightLine;
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -91,7 +92,10 @@ public class NPCScript : MonoBehaviour
         {
             if (hostile)
             {
-                
+                //render line
+                Debug.LogError("enemy sees you!");
+                sightLine.SetPosition(0, new Vector3(head.position.x, head.position.y, head.position.z));
+                sightLine.SetPosition(1, new Vector3(playerScript1.gameObject.transform.position.x, playerScript1.gameObject.transform.position.y, playerScript1.gameObject.transform.position.z));
                 chasingPlayer = true;
             }
             else
@@ -113,12 +117,16 @@ public class NPCScript : MonoBehaviour
             agent.SetDestination(playerScript1.transform.position);
         }
 
-        if (chasingPlayer && distanceToPlayer < 0.5f)
+        if (chasingPlayer && distanceToPlayerConstant < 1)//distanceToPlayer < 0.5f)
         {
             SceneManager.LoadScene("Failure-Captured");
         }
 
-            if (currentBehavior == behaviorState.Fleeing && currentBehavior != behaviorState.Walking)
+        if (chasingPlayer && distanceToPlayerConstant > 10)//distanceToPlayer < 0.5f)
+        {
+            currentBehavior = behaviorState.Walking;
+        }
+        if (currentBehavior == behaviorState.Fleeing && currentBehavior != behaviorState.Walking)
         {
             currentWalkTarget = null;
            // agent.prio
@@ -147,15 +155,20 @@ public class NPCScript : MonoBehaviour
         if (currentBehavior == behaviorState.Walking && currentBehavior != behaviorState.Fleeing)
         {
             Vector3 target = new Vector3(currentWalkTarget.transform.position.x, currentWalkTarget.transform.position.y, currentWalkTarget.transform.position.z);
-            if (!hostile)
-            {
-                agent.SetDestination(target);
-            }
-                if (hostile && !chasingPlayer)
-            {
-                agent.SetDestination(target);
-            }
-            
+            //agent.SetDestination(target);
+             if (!hostile && !drained)
+             {
+                 agent.SetDestination(target);
+             }
+             else if (drained)
+             {
+                 this.agent.enabled = false;
+             }
+                 if (hostile && !chasingPlayer)
+             {
+                 agent.SetDestination(target);
+             }
+
 
             distanceToTarget = Vector3.Distance(currentWalkTarget.transform.position, transform.position);
 
@@ -182,14 +195,14 @@ public class NPCScript : MonoBehaviour
         {
             Debug.Log("BOOM");
             Destroy(this.gameObject);
-           // dead = true;
+           
         }
 
-        distanceToPlayerConstant = Vector3.Distance(Player1.transform.position, transform.position);
+        distanceToPlayerConstant = Vector3.Distance(Player1.transform.position, this.gameObject.transform.position);
 
         if (playerScript1.shootTarget == this.gameObject.transform)
         {
-            distanceToPlayer = Vector3.Distance(Player1.transform.position, transform.position);
+            distanceToPlayer = Vector3.Distance(Player1.transform.position, this.gameObject.transform.position);
         }
 
         if (distanceToPlayer < tooFarDistance + 1)
@@ -198,6 +211,8 @@ public class NPCScript : MonoBehaviour
             {
                 tooClose = true;
                 draining = false;
+                //playerScript1.distanceLight.enabled = true;
+                playerScript1.distanceLight.intensity = 1;
                 playerScript1.distanceLight.color = Color.red;//(Color.red / 1f) * Time.deltaTime;
                 playerScript1.goldieLocks = false;
                 playerScript1.tooCloseText.enabled = true;
@@ -225,7 +240,9 @@ public class NPCScript : MonoBehaviour
                 tooFar = true;
                 draining = false;
                 tooCloseMeter = 0f;
-                playerScript1.distanceLight.color -= (Color.white);// / 2.0f) * Time.deltaTime;
+                //playerScript1.distanceLight.color -= (Color.white);// / 2.0f) * Time.deltaTime;
+                //playerScript1.distanceLight.enabled = false;
+                playerScript1.distanceLight.intensity = 0;
                 playerScript1.isExtracting = draining;
             }
             else
@@ -235,6 +252,8 @@ public class NPCScript : MonoBehaviour
             }
             if (!tooClose && !tooFar && playerScript1.shootTarget == this.gameObject.transform && CARE > 0)
             {
+                //playerScript1.distanceLight.enabled = true;
+                playerScript1.distanceLight.intensity = 1;
                 playerScript1.distanceLight.color = Color.yellow;
                playerScript1.goldieLocks = true;
             }
@@ -261,11 +280,13 @@ public class NPCScript : MonoBehaviour
             // if not too close and not too far and //not too far from cube
             if (!tooClose && CARE > 0 && distanceToPlayerConstant < tooFarDistance)
             {
+               // playerScript1.distanceLight.enabled = true;
                 //assign that NPC to target
                 playerScript1.shootTarget = this.transform;
                 Debug.Log("Setting drain to true");
                 //start draining
                 draining = true;
+                playerScript1.distanceLight.intensity = 1;
                 playerScript1.distanceLight.color = Color.green;
                 playerScript1.isExtracting = draining;
                 playerScript1.goldieLocks = false;
