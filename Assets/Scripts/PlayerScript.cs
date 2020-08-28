@@ -35,6 +35,8 @@ public class PlayerScript : MonoBehaviour
     public Text playerCareText;
     public Text tooCloseText;
     public bool walkInput = false;
+    public bool goldieLocks = false;
+    public float distanceToClosestNPC;
 
     // Start is called before the first frame update
     void Start()
@@ -65,6 +67,7 @@ public class PlayerScript : MonoBehaviour
             CAREstolen = 0;
         }
 
+        
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
         //isGrounded = true;
 
@@ -135,7 +138,7 @@ public class PlayerScript : MonoBehaviour
 
     void findClosestNPC()
     {
-        float distanceToClosestNPC = Mathf.Infinity;
+         distanceToClosestNPC = Mathf.Infinity;
         NPCScript closestNPC = null;
         NPCScript[] allNPCs = GameObject.FindObjectsOfType<NPCScript>();
 

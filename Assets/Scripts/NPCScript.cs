@@ -47,7 +47,7 @@ public class NPCScript : MonoBehaviour
     public enum SightSensitivity { STRICT, LOOSE};
     public SightSensitivity Sensitivtee = SightSensitivity.STRICT;
     public bool chasingPlayer = false;
-    public bool goldieLocks;
+   
     // Start is called before the first frame update
     private void Awake()
     {
@@ -109,6 +109,7 @@ public class NPCScript : MonoBehaviour
 
         if(chasingPlayer)
         {
+            Debug.LogError("ENEMY IS CHASING PLAYER");
             agent.SetDestination(playerScript1.transform.position);
         }
 
@@ -171,7 +172,7 @@ public class NPCScript : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        if (CARE == 0)
+        if (CARE <= 0)
         {
             drained = true;
         }
@@ -198,7 +199,7 @@ public class NPCScript : MonoBehaviour
                 tooClose = true;
                 draining = false;
                 playerScript1.distanceLight.color = Color.red;//(Color.red / 1f) * Time.deltaTime;
-                goldieLocks = false;
+                playerScript1.goldieLocks = false;
                 playerScript1.tooCloseText.enabled = true;
                 playerScript1.isExtracting = draining;
             }
@@ -219,7 +220,7 @@ public class NPCScript : MonoBehaviour
                 tooCloseMeter -= 1f * Time.deltaTime;
             }
 
-            if (distanceToPlayer >= tooFarDistance)
+            if (distanceToPlayer >= tooFarDistance || CARE <= 0)
             {
                 tooFar = true;
                 draining = false;
@@ -232,10 +233,10 @@ public class NPCScript : MonoBehaviour
             {
                 tooFar = false;
             }
-            if (!tooClose && !tooFar && playerScript1.shootTarget == this.gameObject.transform)
+            if (!tooClose && !tooFar && playerScript1.shootTarget == this.gameObject.transform && CARE > 0)
             {
                 playerScript1.distanceLight.color = Color.yellow;
-                goldieLocks = false;
+               playerScript1.goldieLocks = true;
             }
         }
 
@@ -267,7 +268,7 @@ public class NPCScript : MonoBehaviour
                 draining = true;
                 playerScript1.distanceLight.color = Color.green;
                 playerScript1.isExtracting = draining;
-                goldieLocks = false;
+                playerScript1.goldieLocks = false;
 
             }
 

@@ -25,6 +25,9 @@ public class GameController : MonoBehaviour
     public string theLevel;
     public Text tutorial;
    public bool playerNeverWalked = true;
+    public NPCScript targetNPC;
+    //public bool forceShowTut;
+   
     //public List<Vector3> animPosition;
     //public int currentAnimPosition;
 
@@ -35,7 +38,7 @@ public class GameController : MonoBehaviour
 
         timer = timerMax;
         //player1 = findgamobjectwithtag("player")
-        player1Script = Player1.GetComponent<PlayerScript>();
+        
         //if (currentGameState == gameState.Intro)
         // {
         //move ship
@@ -51,6 +54,14 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        player1Script = Player1.GetComponent<PlayerScript>();
+
+        if (player1Script.shootTarget != null)
+        {
+            targetNPC = player1Script.shootTarget.gameObject.GetComponent<NPCScript>();
+        }
+        
+
         if (currentGameState == gameState.Gameplay && player1Script.walkInput == true)
         {
             playerNeverWalked = false;
@@ -79,40 +90,80 @@ public class GameController : MonoBehaviour
 
         distanceToPlayer = Vector3.Distance(Player1.transform.position, this.transform.position);
         playerCare = player1Script.CAREstolen;
-
+        
+        //temp TUTORIAL LOGIC
         if (timer >= (timerMax - 10f) && currentGameState == gameState.Gameplay)
         {
-            Debug.Log("tut showing");
-            tutorial.gameObject.SetActive(true);
-            tutorial.text = "Collect C.A.R.E from Humanoids. Return it to Ship. Avoid Hostiles...";
+            Debug.Log("opening tut showing");
+            //tutorial.gameObject.SetActive(true);
+            showTutorial();
+            tutorial.text = "Collect C.A.R.E from Humanoids. Dispense it into Ship. Avoid Hostiles...";
             
         }
-
+        //790 788
         if (timer <= (timerMax - 10f) && timer >= (timerMax - 12f) && currentGameState == gameState.Gameplay)
         {
-            Debug.Log("set to inactive 2");
-            tutorial.gameObject.SetActive(false);
+            Debug.Log("set opening tut to inactive ");
+            // tutorial.gameObject.SetActive(false);
+            hideTutorial();
 
         }
-
-        if (timer <= (timerMax - 20f)  && currentGameState == gameState.Gameplay && playerNeverWalked)
+        
+        if (timer <= (timerMax - 20f)  && timer >= (timerMax - 23f) &&currentGameState == gameState.Gameplay && playerNeverWalked)
         {
-            Debug.Log("tut showing");
-            tutorial.gameObject.SetActive(true);
+            Debug.Log("wasd tut showing");
+            //tutorial.gameObject.SetActive(true);
+            showTutorial();
             tutorial.text = "Use WASD to move";
 
-        }
-        if (playerNeverWalked == false)
+        }else
+            //if (timer <= (timerMax - 20f) && playerNeverWalked == false)
+           if (playerNeverWalked == false && tutorial.text == "Use WASD to move")
         {
-            Debug.Log("set to inactive 3");
-            tutorial.gameObject.SetActive(false);
+            Debug.Log("set WASD to inactive ");
+            //tutorial.gameObject.SetActive(false);
+            tutorial.text = "clear";
+            hideTutorial();
         }
 
+        if (distanceToPlayer < 5 && player1Script.CAREstolen > 0 && !dispensing)
+        {
+            Debug.Log("dispense tut showing");
+            //tutorial.gameObject.SetActive(true);
+            showTutorial();
+            tutorial.text = "Stand under your ship and hold Right Mouse Button to dispense C.A.R.E";
+
+        }
+        else
+            if (dispensing)
+        {
+            Debug.Log("dispense tut closed");
+            //tutorial.gameObject.SetActive(false);
+            hideTutorial();
+        }
+
+        if (player1Script.goldieLocks && player1Script.distanceToClosestNPC < 50 && targetNPC.drained == false)
+        {
+            Debug.Log("close to harvest tut showing");
+            // tutorial.gameObject.SetActive(true);
+            showTutorial();
+            tutorial.text = "Use Left Mouse button to harvest C.A.R.E";
+
+        }
+        else
+        if(tutorial.text == "Use Left Mouse button to harvest C.A.R.E")
+        {
+            Debug.Log("tut closed");
+            hideTutorial();
+            //tutorial.gameObject.SetActive(false);
+
+        }
+        /*
             if (timer <= (timerMax - 5f) && currentGameState == gameState.Gameplay)
         {
             tutorial.gameObject.SetActive(false);
 
-        }
+        }*/
 
 
         if (timerActive && currentGameState == gameState.Gameplay)
@@ -153,26 +204,13 @@ public class GameController : MonoBehaviour
 
             }
 
-            if (distanceToPlayer < 5 && player1Script.CAREstolen > 0 && !dispensing)
-            {
-                Debug.Log("tut showing");
-                tutorial.gameObject.SetActive(true);
-                tutorial.text = "Stand under your ship and hold Right Mouse Button to dispense C.A.R.E";
-
-            }else
-            if (dispensing)
-            {
-                Debug.Log("tut closed");
-                tutorial.gameObject.SetActive(false);
-               
-
-            }
+            
 
             if (timer <= (timerMax - 5f) && currentGameState == gameState.Gameplay)
             {
                 Debug.Log("set inactive 4");
-                tutorial.gameObject.SetActive(false);
-
+                //tutorial.gameObject.SetActive(false);
+                hideTutorial();
             }
 
         }
@@ -241,6 +279,16 @@ public class GameController : MonoBehaviour
         
     }
 
+    void showTutorial()
+    {
+        Debug.Log("showing tutorial");
+        tutorial.gameObject.SetActive(true);
+    }
 
+    void hideTutorial()
+    {
+        Debug.Log("hiding tutorial");
+        tutorial.gameObject.SetActive(false);
+    }
 
 }
