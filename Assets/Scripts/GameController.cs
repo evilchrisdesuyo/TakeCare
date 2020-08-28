@@ -26,6 +26,7 @@ public class GameController : MonoBehaviour
     public Text tutorial;
    public bool playerNeverWalked = true;
     public NPCScript targetNPC;
+    public GameObject playerModel;
     //public bool forceShowTut;
    
     //public List<Vector3> animPosition;
@@ -77,11 +78,13 @@ public class GameController : MonoBehaviour
             player1Script.enabled = false;
             Debug.Log("player should be moving");
             Player1.transform.position = this.gameObject.transform.position;
+            playerModel.SetActive(false);
         }
 
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("SaucerStopped"))
         {
             player1Script.enabled = true;
+            playerModel.SetActive(true);
             currentGameState = gameState.Gameplay;
         }
 

@@ -90,6 +90,7 @@ public class NPCScript : MonoBehaviour
        
         if (seesPlayer)
         {
+            lastPlayerLocation = new Vector3(Player1.transform.position.x, Player1.transform.position.y, Player1.transform.position.z);
             if (hostile)
             {
                 //render line
@@ -111,12 +112,30 @@ public class NPCScript : MonoBehaviour
             chasingPlayer = false;
         }
 
+        //agent moves towards 
         if(chasingPlayer)
         {
             Debug.LogError("ENEMY IS CHASING PLAYER");
             agent.SetDestination(playerScript1.transform.position);
+            agent.speed = 5;
         }
 
+        // lose sight of the player go to his last known location
+        if (chasingPlayer && !seesPlayer)
+        {
+            Debug.LogError("ENEMY IS CHASING PLAYER");
+            agent.SetDestination(lastPlayerLocation);
+            agent.speed = 5;
+        }
+
+        //gives up chasing the player
+        if (chasingPlayer && distanceToPlayerConstant > 20 && !seesPlayer)
+        {
+            chasingPlayer = false;
+            currentBehavior = behaviorState.Walking;
+        }
+
+        //if agent catches you go into failure state
         if (chasingPlayer && distanceToPlayerConstant < 1)//distanceToPlayer < 0.5f)
         {
             SceneManager.LoadScene("Failure-Captured");
@@ -131,7 +150,7 @@ public class NPCScript : MonoBehaviour
             currentWalkTarget = null;
            // agent.prio
             Vector3 target = new Vector3(currentFleeTarget.transform.position.x, currentFleeTarget.transform.position.y, currentFleeTarget.transform.position.z);
-            agent.speed = 19;
+            agent.speed = 15;
             agent.SetDestination(target);
         }
         //currentBehavior = behaviorState.Walking;
@@ -163,10 +182,12 @@ public class NPCScript : MonoBehaviour
              else if (drained)
              {
                  this.agent.enabled = false;
+                Destroy(agent);
              }
                  if (hostile && !chasingPlayer)
              {
-                 agent.SetDestination(target);
+                agent.speed = 2.5f;
+                agent.SetDestination(target);
              }
 
 
@@ -211,7 +232,7 @@ public class NPCScript : MonoBehaviour
             {
                 tooClose = true;
                 draining = false;
-                //playerScript1.distanceLight.enabled = true;
+                playerScript1.distanceLight.enabled = true;
                 playerScript1.distanceLight.intensity = 1;
                 playerScript1.distanceLight.color = Color.red;//(Color.red / 1f) * Time.deltaTime;
                 playerScript1.goldieLocks = false;
@@ -241,8 +262,9 @@ public class NPCScript : MonoBehaviour
                 draining = false;
                 tooCloseMeter = 0f;
                 //playerScript1.distanceLight.color -= (Color.white);// / 2.0f) * Time.deltaTime;
-                //playerScript1.distanceLight.enabled = false;
-                playerScript1.distanceLight.intensity = 0;
+                playerScript1.distanceLight.enabled = true;
+                playerScript1.distanceLight.color = Color.white;
+                playerScript1.distanceLight.intensity = 0.5f;
                 playerScript1.isExtracting = draining;
             }
             else
@@ -252,7 +274,7 @@ public class NPCScript : MonoBehaviour
             }
             if (!tooClose && !tooFar && playerScript1.shootTarget == this.gameObject.transform && CARE > 0)
             {
-                //playerScript1.distanceLight.enabled = true;
+                playerScript1.distanceLight.enabled = true;
                 playerScript1.distanceLight.intensity = 1;
                 playerScript1.distanceLight.color = Color.yellow;
                playerScript1.goldieLocks = true;
@@ -280,7 +302,7 @@ public class NPCScript : MonoBehaviour
             // if not too close and not too far and //not too far from cube
             if (!tooClose && CARE > 0 && distanceToPlayerConstant < tooFarDistance)
             {
-               // playerScript1.distanceLight.enabled = true;
+                playerScript1.distanceLight.enabled = true;
                 //assign that NPC to target
                 playerScript1.shootTarget = this.transform;
                 Debug.Log("Setting drain to true");

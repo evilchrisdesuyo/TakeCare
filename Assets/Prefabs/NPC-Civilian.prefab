@@ -132,7 +132,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 2.5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -156,6 +156,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0a62fffd43561f40b3291d75e398072, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  speed: 0
   NPCcontroller: {fileID: 8458376673630460986}
   Player1: {fileID: 0}
   playerScript1: {fileID: 0}
@@ -166,7 +168,6 @@ MonoBehaviour:
   tooFarDistance: 7
   secsTilPassout: 10
   tooCloseMeter: 0
-  dead: 0
   draining: 0
   drained: 0
   CARE: 10
@@ -193,6 +194,7 @@ MonoBehaviour:
   hostile: 0
   Sensitivtee: 0
   chasingPlayer: 0
+  sightLine: {fileID: 0}
 --- !u!135 &8458376673630460980
 SphereCollider:
   m_ObjectHideFlags: 0

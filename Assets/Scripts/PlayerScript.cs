@@ -37,6 +37,7 @@ public class PlayerScript : MonoBehaviour
     public bool walkInput = false;
     public bool goldieLocks = false;
     public float distanceToClosestNPC;
+    private bool jumpBool;
 
     // Start is called before the first frame update
     void Start()
@@ -105,6 +106,11 @@ public class PlayerScript : MonoBehaviour
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            jumpBool = true;
+        }
+        if (!isGrounded)
+        {
+            jumpBool = false;
         }
 
         velocity.y += gravity * Time.deltaTime;
@@ -120,10 +126,16 @@ public class PlayerScript : MonoBehaviour
 
         findClosestNPC();
 
+        //float playerSpeedInput = vertical * horizontal;
+
+        //float playerSpeedInputX = ;
         // Animation updates
         animator.SetBool("isGround", isGrounded);
-        animator.SetFloat("Speed", speed);
+        animator.SetBool("Jump", jumpBool);
+        //animator.SetFloat("Speed", playerSpeedInput);
+        animator.SetFloat("Speed", (Mathf.Abs(Input.GetAxisRaw("Vertical")) + Mathf.Abs(Input.GetAxisRaw("Horizontal"))));
         animator.SetBool("Extracting", isExtracting);
+
 
         //shootTarget.gameobject.material.emmissive = glowing
     }
