@@ -75,6 +75,7 @@ public class GameController : MonoBehaviour
        
         if (currentGameState == gameState.Intro)
         {
+
             player1Script.enabled = false;
             Debug.Log("player should be moving");
             Player1.transform.position = this.gameObject.transform.position;

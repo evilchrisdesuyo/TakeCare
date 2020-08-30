@@ -48,12 +48,15 @@ public class NPCScript : MonoBehaviour
     public SightSensitivity Sensitivtee = SightSensitivity.STRICT;
     public bool chasingPlayer = false;
     public LineRenderer sightLine;
+    public bool useIdleTimer = true;
+    public float cullingDistance = 150f;
+    public GameController currentGameState;
 
     // Start is called before the first frame update
     private void Awake()
     {
         //Player1 = GetComponent.
-
+        //currentState = GameObject.Find("Saucer(GameController)").GameController.;
         Player1 = GameObject.FindGameObjectWithTag("Player");
         playerScript1 = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         allWalkTargets = new List<GameObject>();
@@ -85,19 +88,21 @@ public class NPCScript : MonoBehaviour
         animator.SetFloat("Speed", speed);
         animator.SetBool("isDrained", drained);
         animator.SetBool("isScared", currentBehavior.Equals(behaviorState.Fleeing));
-        
-        
-       
+
+
+
         if (seesPlayer)
         {
+            sightLine.enabled = true;
+            //render line
+            Debug.LogError("enemy sees you!");
+            sightLine.SetPosition(0, new Vector3(head.position.x, head.position.y, head.position.z));
+            sightLine.SetPosition(1, new Vector3(playerScript1.gameObject.transform.position.x, playerScript1.gameObject.transform.position.y, playerScript1.gameObject.transform.position.z));
+
             lastPlayerLocation = new Vector3(Player1.transform.position.x, Player1.transform.position.y, Player1.transform.position.z);
             if (hostile)
             {
-                //render line
-                Debug.LogError("enemy sees you!");
-                sightLine.SetPosition(0, new Vector3(head.position.x, head.position.y, head.position.z));
-                sightLine.SetPosition(1, new Vector3(playerScript1.gameObject.transform.position.x, playerScript1.gameObject.transform.position.y, playerScript1.gameObject.transform.position.z));
-                chasingPlayer = true;
+                 chasingPlayer = true;
             }
             else
                 if (!hostile)
@@ -105,6 +110,10 @@ public class NPCScript : MonoBehaviour
                 currentBehavior = behaviorState.Fleeing;
                 idleTimer = 0;
             }
+        }
+        else if (!seesPlayer)
+        {
+            sightLine.enabled = false;
         }
 
         if (distanceToPlayer >= 20 && !seesPlayer || distanceToPlayer > 50)
@@ -159,12 +168,16 @@ public class NPCScript : MonoBehaviour
             // Debug.LogError("NPC STUCK AT" + transform.position);
         }
         //
-        if (idleTimer > 0)
+        if (useIdleTimer && idleTimer > 0)
         {
             idleTimer -= 1 * Time.deltaTime;
         }
+        else if (useIdleTimer)
+        {
+            idleTimer = 5;
+        }
 
-        if (currentBehavior == behaviorState.Idle && idleTimer <= 0)
+        if (useIdleTimer && currentBehavior == behaviorState.Idle && idleTimer <= 0)
         {
             currentBehavior = behaviorState.Walking;
             currentWalkTarget = allWalkTargets[Random.Range(0, allWalkTargets.Count)];
@@ -201,7 +214,7 @@ public class NPCScript : MonoBehaviour
             }
         }
 
-        if (distanceToPlayerConstant > 150)
+        if ( distanceToPlayerConstant > cullingDistance)
         {
             Destroy(this.gameObject);
         }

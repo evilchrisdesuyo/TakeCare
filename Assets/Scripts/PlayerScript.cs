@@ -18,7 +18,7 @@ public class PlayerScript : MonoBehaviour
     public GameObject alien;
     public Transform cam;
     public float movementSpeed = 6f;
-    
+    public float averageSpeed = 6f;
     public float turnSmoothing = 0.1f;
     public float turnSmoothingVelocity;
     float gravity = -9.81f;
@@ -34,10 +34,11 @@ public class PlayerScript : MonoBehaviour
     public Light distanceLight;
     public Text playerCareText;
     public Text tooCloseText;
-    public bool walkInput = false;
+    public bool walkInput = false; 
     public bool goldieLocks = false;
     public float distanceToClosestNPC;
     private bool jumpBool;
+    //public bool Sprint;
 
     // Start is called before the first frame update
     void Start()
@@ -63,6 +64,16 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
+        if (Sprint)
+        {
+            movementSpeed = movementSpeed + 5f;
+        }
+        else if (!Sprint)
+        {
+            movementSpeed = averageSpeed;
+        }*/
+
         if (CAREstolen < 0)
         {
             CAREstolen = 0;
@@ -101,9 +112,17 @@ public class PlayerScript : MonoBehaviour
 
             
         }
-        
+        /*
+        if (Input.GetButtonDown("Sprint") && isGrounded)
+        {
+            Sprint = true;
+        }
+        else if (Input.GetButtonUp("Sprint"))
+        {
+            Sprint = false;
+        }*/
 
-        if (Input.GetButtonDown("Jump") && isGrounded)
+            if (Input.GetButtonDown("Jump") && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             jumpBool = true;

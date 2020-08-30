@@ -11,14 +11,25 @@ public class UIScript : MonoBehaviour
     public GameObject pauseUI;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        gamePaused = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (gamePaused)
+        {
+            pauseUI.SetActive(true);
+            Time.timeScale = 0f;
+        }
+        else if (!gamePaused)
+        {
+            pauseUI.SetActive(false);
+            Time.timeScale = 1f;
+        }
+
         if (Input.GetButtonDown("Cancel"))
         {
             //Application.Quit();
@@ -37,16 +48,16 @@ public class UIScript : MonoBehaviour
     public void Resume()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        pauseUI.SetActive(false);
+        
         Time.timeScale = 1f;
-        gamePaused = false;
+        gamePaused = gamePaused;
     }
 
     public void Pause()
     {
         Cursor.lockState = CursorLockMode.None;
-        pauseUI.SetActive(true);
-       Time.timeScale = 0f;
+       // pauseUI.SetActive(true);
+      // Time.timeScale = 0f;
         gamePaused = true;
     }
 
