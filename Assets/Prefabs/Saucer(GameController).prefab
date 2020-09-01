@@ -217,7 +217,7 @@ GameObject:
   - component: {fileID: 402670516019715034}
   - component: {fileID: 402670516019715036}
   m_Layer: 0
-  m_Name: Saucer
+  m_Name: Saucer(GameController)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -231,7 +231,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 402670516019715037}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.734499, y: 2.42, z: -44.31243}
+  m_LocalPosition: {x: 0, y: 2.42, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3416384852220837188}
@@ -293,7 +293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0464a817e02a6146965501dc3923406, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: 600
+  timerMax: 800
   timerActive: 1
   careInShip: 0
   careCapacity: 500
@@ -307,6 +307,16 @@ MonoBehaviour:
   timerText: {fileID: 0}
   careInShipText: {fileID: 0}
   anim: {fileID: 402670516019715034}
+  theLevel: 
+  tutorial: {fileID: 0}
+  playerNeverWalked: 1
+  targetNPC: {fileID: 0}
+  playerModel: {fileID: 0}
+  firstTimeTutorial: 1
+  tutorialFirstWoman: {fileID: 0}
+  tutorialSecondMan: {fileID: 0}
+  distanceToSecond: 0
+  countDownToStart: 3
 --- !u!1 &402670516171350431
 GameObject:
   m_ObjectHideFlags: 0

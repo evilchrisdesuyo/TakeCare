@@ -11,7 +11,7 @@ public class GameController : MonoBehaviour
     public bool timerActive = true;
     public float careInShip = 0f;
     public float careCapacity = 1000;
-    public enum gameState {Intro, Gameplay}
+    public enum gameState {Intro, Tutorial, Gameplay}
     public gameState currentGameState;
     public GameObject Player1;
     public PlayerScript player1Script;
@@ -27,8 +27,14 @@ public class GameController : MonoBehaviour
    public bool playerNeverWalked = true;
     public NPCScript targetNPC;
     public GameObject playerModel;
-    //public bool forceShowTut;
-   
+    public bool firstTimeTutorial = true;
+    public NPCScript tutorialFirstWoman;
+    public NPCScript tutorialSecondMan;
+    public NPCScript tutorialAgent;
+    public float distanceToSecond;
+    public float countDownToStart = 3f;
+    //pblic bool forceShowTut;
+
     //public List<Vector3> animPosition;
     //public int currentAnimPosition;
 
@@ -101,17 +107,17 @@ public class GameController : MonoBehaviour
             Debug.Log("opening tut showing");
             //tutorial.gameObject.SetActive(true);
             showTutorial();
-            tutorial.text = "Collect C.A.R.E from Humanoids. Dispense it into Ship. Avoid Hostiles...";
+            tutorial.text = "Welcome to E-Arth. Your mission: Collect C.A.R.E from Humanoids. Dispense it into the ship.";
             
         }
         //790 788
-        if (timer <= (timerMax - 10f) && timer >= (timerMax - 12f) && currentGameState == gameState.Gameplay)
+   /*     if (timer <= (timerMax - 10f) && timer >= (timerMax - 12f) && currentGameState == gameState.Gameplay)
         {
             Debug.Log("set opening tut to inactive ");
             // tutorial.gameObject.SetActive(false);
             hideTutorial();
 
-        }
+        }*/
         
         if (timer <= (timerMax - 20f)  && timer >= (timerMax - 23f) &&currentGameState == gameState.Gameplay && playerNeverWalked)
         {
@@ -120,7 +126,8 @@ public class GameController : MonoBehaviour
             showTutorial();
             tutorial.text = "Use WASD to move";
 
-        }else
+        }
+        /*else
             //if (timer <= (timerMax - 20f) && playerNeverWalked == false)
            if (playerNeverWalked == false && tutorial.text == "Use WASD to move")
         {
@@ -128,9 +135,74 @@ public class GameController : MonoBehaviour
             //tutorial.gameObject.SetActive(false);
             tutorial.text = "clear";
             hideTutorial();
+        }*/
+        float distanceToTutWoman = Vector3.Distance(Player1.transform.position, tutorialFirstWoman.transform.position);
+
+        if (distanceToTutWoman <= 300 && tutorialFirstWoman != null && tutorialFirstWoman.currentBehavior == NPCScript.behaviorState.Fleeing) //&& tutorial.text != "Humans will flee if they see you.")
+        {
+            showTutorial();
+            tutorial.text = "Humans will flee if they see you.";
         }
 
-        if (distanceToPlayer < 5 && player1Script.CAREstolen > 0 && !dispensing)
+        if (tutorialSecondMan != null)
+         {
+             distanceToSecond = Vector3.Distance(Player1.transform.position, tutorialSecondMan.gameObject.transform.position);
+        }
+
+        if (tutorialSecondMan != null && tutorialSecondMan.drained == false && distanceToSecond <= 25)
+        {
+            showTutorial();
+            tutorial.text = "That one hasnt seen you. Walk behind it and harvest some C.A.R.E";
+        }
+
+        if (tutorialSecondMan != null && tutorialSecondMan.drained == false && distanceToSecond <= 15)
+        {
+            showTutorial();
+            tutorial.text = "The light on your gun will turn yellow when in range.";
+        }
+
+        if (tutorialSecondMan == null && tutorial.text == "The light on your gun will turn yellow when in range.")
+        {
+            showTutorial();
+            tutorial.text = "The radiation from your gun will combust humans if you get too close to them...";
+        }
+
+        if (tutorialSecondMan != null && tutorialSecondMan.drained == true)
+        {
+            showTutorial();
+            tutorial.text = "You have collected a humans CARE! Take it back the ship! Dont worry, it will awaken soon.";
+            
+        }
+        
+        if (tutorialSecondMan != null && tutorialSecondMan.drained == true && distanceToSecond <= 35)
+        {
+            //move agent to collapsed dude
+            tutorialAgent.currentBehavior = NPCScript.behaviorState.Walking;
+            tutorialAgent.currentWalkTarget = tutorialSecondMan.gameObject;
+        }
+
+        
+        //distance between agent and guy facing wrong way
+        if (tutorialAgent != null && tutorialSecondMan != null)
+        {
+            float distanceFromAgentToTut = Vector3.Distance(tutorialAgent.transform.position, tutorialSecondMan.transform.position);
+
+            if (tutorialAgent != null && tutorialSecondMan != null && tutorialSecondMan.drained == true && distanceFromAgentToTut <= 5)
+            {
+                //move agent to collapsed dude
+                tutorialAgent.currentBehavior = NPCScript.behaviorState.Idle;
+                //tutorialAgent.currentWalkTarget = tutorialSecondMan.gameObject;
+            }
+        }
+        
+
+
+        if (tutorialAgent.currentBehavior == NPCScript.behaviorState.Walking)
+        {
+            tutorialAgent.currentBehavior = NPCScript.behaviorState.Idle;
+        }
+
+            if (distanceToPlayer < 5 && player1Script.CAREstolen > 0 && !dispensing)
         {
             Debug.Log("dispense tut showing");
             //tutorial.gameObject.SetActive(true);
@@ -154,7 +226,7 @@ public class GameController : MonoBehaviour
             tutorial.text = "Use Left Mouse button to harvest C.A.R.E";
 
         }
-        else
+       /* else
         if(tutorial.text == "Use Left Mouse button to harvest C.A.R.E")
         {
             Debug.Log("tut closed");
@@ -195,7 +267,7 @@ public class GameController : MonoBehaviour
         if (Input.GetButton("Fire2"))
         {
            
-
+            
             // if not too close and not too far and //not too far from cube
             if (distanceToPlayer < 5 && playerCare > 0f)
             {
@@ -208,15 +280,15 @@ public class GameController : MonoBehaviour
 
             }
 
-            
 
+            /*
             if (timer <= (timerMax - 5f) && currentGameState == gameState.Gameplay)
             {
                 Debug.Log("set inactive 4");
                 //tutorial.gameObject.SetActive(false);
                 hideTutorial();
             }
-
+            */
         }
         if (Input.GetButtonUp("Fire2") || playerCare <= 0 || distanceToPlayer >= 5f)
         {
@@ -285,14 +357,24 @@ public class GameController : MonoBehaviour
 
     void showTutorial()
     {
-        Debug.Log("showing tutorial");
+        Debug.Log("showing tutorial FUNCTION");
         tutorial.gameObject.SetActive(true);
+        //wait
+        StartCoroutine(tutorialHideTimer());
     }
 
     void hideTutorial()
     {
         Debug.Log("hiding tutorial");
-        tutorial.gameObject.SetActive(false);
+        //tutorial.gameObject.SetActive(false);
     }
 
+    IEnumerator tutorialHideTimer()
+    {
+
+        //yield on a new YieldInstruction that waits for 5 seconds.
+        yield return new WaitForSeconds(5);
+        
+        hideTutorial();
+    }
 }

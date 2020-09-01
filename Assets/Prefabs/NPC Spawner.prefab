@@ -46,9 +46,11 @@ MonoBehaviour:
   Player1: {fileID: 0}
   spawnList:
   - {fileID: 8458376673630460988, guid: 4edd6778a1364b84d911ffd2e5a32bfa, type: 3}
-  - {fileID: 8580035613066670201, guid: 36259aa43383e234d983223a5fdf8f80, type: 3}
+  - {fileID: 3770852263769425720, guid: a7fa8d3926459b5469ff7efa152a87c8, type: 3}
   - {fileID: 8458376673630460988, guid: 4edd6778a1364b84d911ffd2e5a32bfa, type: 3}
+  - {fileID: 3770852263769425720, guid: a7fa8d3926459b5469ff7efa152a87c8, type: 3}
+  - {fileID: 8580035613066670201, guid: 36259aa43383e234d983223a5fdf8f80, type: 3}
   distanceToPlayer: 0
-  spawnFrequency: 5
+  spawnFrequency: 10
   currentSpawnTimer: 0
   spawnRange: 75
