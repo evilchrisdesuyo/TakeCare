@@ -14,11 +14,14 @@ public class MenuController : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.None;
+        
+       
     }
 
     // Update is called once per frame
     void Update()
     {
+
         distanceToTarget = Vector3.Distance(saucer.transform.position, saucerEndPoint.position);
         //move ship
         if (saucer != null && newGameLogic)
@@ -26,7 +29,7 @@ public class MenuController : MonoBehaviour
             float step = 30 * Time.deltaTime;
             saucer.transform.position = Vector3.MoveTowards(saucer.transform.position, saucerEndPoint.transform.position, step);
 
-            if (distanceToTarget < 0.1)
+            if (distanceToTarget < 0.5)
             {
                // resume();
                 SceneManager.LoadScene("video");
