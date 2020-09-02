@@ -10,6 +10,7 @@ public class NPCSpawner : MonoBehaviour
     public float spawnFrequency = 5f;
     public float currentSpawnTimer;
     public float spawnRange = 75;
+    public GameController currentGameState;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,7 +30,7 @@ public class NPCSpawner : MonoBehaviour
             //check distance to player
             distanceToPlayer = Vector3.Distance(Player1.transform.position, transform.position);
         // if player distance is > startSpawningDistance
-        if (distanceToPlayer > spawnRange && currentSpawnTimer <= 0.2f)
+        if (distanceToPlayer > spawnRange && currentSpawnTimer <= 0.2f && currentGameState.currentGameState == GameController.gameState.Gameplay)
         {
             Debug.Log("Spawning NPC");
             spawnNPC();

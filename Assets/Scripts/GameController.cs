@@ -35,6 +35,11 @@ public class GameController : MonoBehaviour
     public float countDownToStart = 3f;
     //pblic bool forceShowTut;
 
+     float fleeTutorialTimer = 5;
+    float hasntSeenYou = 5;
+    float lightTut = 5;
+    float radiationTut = 5;
+    float collectedCARETut = 5;
     //public List<Vector3> animPosition;
     //public int currentAnimPosition;
 
@@ -100,8 +105,10 @@ public class GameController : MonoBehaviour
 
         distanceToPlayer = Vector3.Distance(Player1.transform.position, this.transform.position);
         playerCare = player1Script.CAREstolen;
-        
+
         //temp TUTORIAL LOGIC
+        //This is chris from the past. I know you're planning on disabling the timer during the tutorial... but this code relies on it... you're welcome
+
         if (timer >= (timerMax - 10f) && currentGameState == gameState.Gameplay)
         {
             Debug.Log("opening tut showing");
@@ -119,7 +126,8 @@ public class GameController : MonoBehaviour
 
         }*/
         
-        if (timer <= (timerMax - 20f)  && timer >= (timerMax - 23f) &&currentGameState == gameState.Gameplay && playerNeverWalked)
+        //This is chris from the past. I know you're planning on disabling the timer during the tutorial... but this code relies on it... you're welcome
+        if (timer <= (timerMax - 20f)  && timer >= (timerMax - 23f) && currentGameState == gameState.Gameplay && playerNeverWalked)
         {
             Debug.Log("wasd tut showing");
             //tutorial.gameObject.SetActive(true);
@@ -137,46 +145,56 @@ public class GameController : MonoBehaviour
             hideTutorial();
         }*/
         float distanceToTutWoman = Vector3.Distance(Player1.transform.position, tutorialFirstWoman.transform.position);
-
-        if (distanceToTutWoman <= 300 && tutorialFirstWoman != null && tutorialFirstWoman.currentBehavior == NPCScript.behaviorState.Fleeing) //&& tutorial.text != "Humans will flee if they see you.")
+        //float fleeTutorialTimer = 5;
+       
+       
+        if (distanceToTutWoman <= 300 && tutorialFirstWoman != null && tutorialFirstWoman.currentBehavior == NPCScript.behaviorState.Fleeing && fleeTutorialTimer >= 0) //&& tutorial.text != "Humans will flee if they see you.")
         {
+            Debug.Log("SHOWING FLEEING TUTORIAL");
             showTutorial();
             tutorial.text = "Humans will flee if they see you.";
+            fleeTutorialTimer -= 1 * Time.deltaTime;
         }
 
         if (tutorialSecondMan != null)
          {
              distanceToSecond = Vector3.Distance(Player1.transform.position, tutorialSecondMan.gameObject.transform.position);
         }
-
-        if (tutorialSecondMan != null && tutorialSecondMan.drained == false && distanceToSecond <= 25)
+        
+      
+        if (tutorialSecondMan != null && tutorialSecondMan.drained == false && distanceToSecond <= 25 && hasntSeenYou >= 0)
         {
             showTutorial();
             tutorial.text = "That one hasnt seen you. Walk behind it and harvest some C.A.R.E";
+            hasntSeenYou -= 1 * Time.deltaTime;
         }
 
-        if (tutorialSecondMan != null && tutorialSecondMan.drained == false && distanceToSecond <= 15)
+        
+        if (tutorialSecondMan != null && tutorialSecondMan.drained == false && distanceToSecond <= 15 && lightTut >= 5)
         {
             showTutorial();
             tutorial.text = "The light on your gun will turn yellow when in range.";
+            lightTut -= 1 * Time.deltaTime;
         }
 
-        if (tutorialSecondMan == null && tutorial.text == "The light on your gun will turn yellow when in range.")
+        if (tutorialSecondMan == null && tutorial.text == "The light on your gun will turn yellow when in range." && radiationTut >= 0)
         {
             showTutorial();
             tutorial.text = "The radiation from your gun will combust humans if you get too close to them...";
+            radiationTut -= 1 * Time.deltaTime;
         }
 
-        if (tutorialSecondMan != null && tutorialSecondMan.drained == true)
+        if (tutorialSecondMan != null && tutorialSecondMan.drained == true && collectedCARETut >= 0)
         {
             showTutorial();
-            tutorial.text = "You have collected a humans CARE! Take it back the ship! Dont worry, it will awaken soon.";
-            
+            tutorial.text = "You have collected a humans CARE! Take it back the ship! Dont worry, the human will awaken soon.";
+            collectedCARETut -= 1 * Time.deltaTime;
         }
         
-        if (tutorialSecondMan != null && tutorialSecondMan.drained == true && distanceToSecond <= 35)
+        if (tutorialSecondMan != null && tutorialSecondMan.drained == true && distanceToSecond >= 10)
         {
             //move agent to collapsed dude
+            Debug.Log("AGENT STUCK");
             tutorialAgent.currentBehavior = NPCScript.behaviorState.Walking;
             tutorialAgent.currentWalkTarget = tutorialSecondMan.gameObject;
         }
@@ -196,11 +214,11 @@ public class GameController : MonoBehaviour
         }
         
 
-
+        /*
         if (tutorialAgent.currentBehavior == NPCScript.behaviorState.Walking)
         {
             tutorialAgent.currentBehavior = NPCScript.behaviorState.Idle;
-        }
+        }*/
 
             if (distanceToPlayer < 5 && player1Script.CAREstolen > 0 && !dispensing)
         {
