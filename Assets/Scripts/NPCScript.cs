@@ -51,7 +51,10 @@ public class NPCScript : MonoBehaviour
     public bool useIdleTimer = true;
     public float cullingDistance = 150f;
     public GameController currentGameState;
-
+    public AudioSource sourceOfAudio;
+    float screamTimer;
+    public AudioClip[] screamSoundArray;
+    AudioClip lastClip;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -109,6 +112,13 @@ public class NPCScript : MonoBehaviour
             {
                 currentBehavior = behaviorState.Fleeing;
                 idleTimer = 0;
+
+                    screamTimer += Time.deltaTime;
+                if (screamTimer > 5)
+                {
+                    sourceOfAudio.PlayOneShot(randomScream());
+                    screamTimer = 0;
+                }
             }
         }
         else if (!seesPlayer)
@@ -188,13 +198,13 @@ public class NPCScript : MonoBehaviour
         {
             Vector3 target = new Vector3(currentWalkTarget.transform.position.x, currentWalkTarget.transform.position.y, currentWalkTarget.transform.position.z);
             //agent.SetDestination(target);
-             if (!hostile && !drained)
+             if (!hostile && !drained && useIdleTimer)
              {
                  agent.SetDestination(target);
              }
              else if (drained)
              {
-                 this.agent.enabled = false;
+                 this.enabled = false;
                 Destroy(agent);
              }
                  if (hostile && !chasingPlayer)
@@ -402,6 +412,21 @@ public class NPCScript : MonoBehaviour
 
         if (!other.CompareTag("Player")) return;
         seesPlayer = false;
+    }
+
+    AudioClip randomScream()
+    {
+        int attempts = 3;
+        AudioClip newClip = screamSoundArray[Random.Range(0, screamSoundArray.Length - 1)];
+
+        while (newClip == lastClip && attempts > 0)
+        {
+            newClip = screamSoundArray[Random.Range(0, screamSoundArray.Length - 1)];
+            attempts--;
+        }
+
+        lastClip = newClip;
+        return newClip;
     }
     /*
     void OnTriggerStay(Collider other)

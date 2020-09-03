@@ -27,19 +27,23 @@ public class GameController : MonoBehaviour
    public bool playerNeverWalked = true;
     public NPCScript targetNPC;
     public GameObject playerModel;
+
+    //pblic bool forceShowTut;
+    //tutorial namespace
     public bool firstTimeTutorial = true;
     public NPCScript tutorialFirstWoman;
     public NPCScript tutorialSecondMan;
     public NPCScript tutorialAgent;
     public float distanceToSecond;
     public float countDownToStart = 3f;
-    //pblic bool forceShowTut;
-
-     float fleeTutorialTimer = 5;
+    float fleeTutorialTimer = 5;
     float hasntSeenYou = 5;
     float lightTut = 5;
     float radiationTut = 5;
     float collectedCARETut = 5;
+    float distanceToTutAgent;
+    float hostileTut = 5;
+    float startTut = 5;
     //public List<Vector3> animPosition;
     //public int currentAnimPosition;
 
@@ -170,7 +174,7 @@ public class GameController : MonoBehaviour
         }
 
         
-        if (tutorialSecondMan != null && tutorialSecondMan.drained == false && distanceToSecond <= 15 && lightTut >= 5)
+        if (tutorialSecondMan != null && tutorialSecondMan.drained == false && distanceToSecond <= 15 && lightTut >= 0)
         {
             showTutorial();
             tutorial.text = "The light on your gun will turn yellow when in range.";
@@ -199,7 +203,25 @@ public class GameController : MonoBehaviour
             tutorialAgent.currentWalkTarget = tutorialSecondMan.gameObject;
         }
 
-        
+        if (tutorialAgent != null)
+        {
+            distanceToTutAgent = Vector3.Distance(Player1.transform.position, tutorialAgent.transform.position);
+         }
+
+        if (tutorialAgent != null && tutorialAgent.drained == false && distanceToTutAgent <= 20 && hostileTut >= 0)
+        {
+            tutorial.text = "A human hostile! Don't let it see you or you will be captured!";
+
+        }
+
+        if (tutorialAgent != null && tutorialAgent.drained == true && startTut >= 0)
+        {
+            tutorial.text = "Threat nuetralized. You now have 15 E-Arth minutes to complete your mission...";
+            //wait 5 seconds
+            //begin countdown
+            //change to gameplaymode
+        }
+
         //distance between agent and guy facing wrong way
         if (tutorialAgent != null && tutorialSecondMan != null)
         {
